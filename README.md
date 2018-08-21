@@ -13,3 +13,8 @@ You're going to need:
 ___
 ### Getting Set Up
 1.  Clone  _this repo_  to your hard drive with  `git clone https://github.com/`
+
+### Contributor
+- [Nadeem Hilal](https://github.com/nadeem09wani)
+- [Mufti Samiullah](https://github.com/muftisamiullah)
+- [Owais Drabu](https://github.com/invincibleme)
