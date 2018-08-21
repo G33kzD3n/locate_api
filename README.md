@@ -3,7 +3,7 @@ An *IOT* based *web-service* for **University of Kashmir North Campus Transporta
 This is the **REST API** repository for the product that controls the server logic for the product, made with **Laravel 5.5* , Mysql database.   
 
 
-### Getting Started with Slate
+### Getting Started with locate_api
 ___
 **Prerequisites**
 You're going to need:
