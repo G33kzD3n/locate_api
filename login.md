@@ -1,7 +1,7 @@
 # Login
 
-Used to collect a Token, Level, Bus No for a registered User.
-These users in this use-case are not the admin's.
+Used to collect Token, Level, Bus No for a registered User.
+The End users in this use-case are not the admin's.
 
 **URL** : `/api/1.0/login/`
 
@@ -13,7 +13,7 @@ These users in this use-case are not the admin's.
 
 ```json
 {
-    "user_id": "[valid user_id is actually the rollno/employe_id issued by the the university]",
+    "user_id" : "[valid user_id is actually the rollno/employee_id issued by the the university]",
     "password": "[password in plain text]"
 }
 ```
@@ -22,7 +22,7 @@ These users in this use-case are not the admin's.
 
 ```json
 {
-    "user_id": "15045112037",
+    "user_id" : "15045112037",
     "password": "abcd1234"
 }
 ```
@@ -35,9 +35,9 @@ These users in this use-case are not the admin's.
 
 ```json
 {	
-	"level" : "2",
-	"bus_no”: "8840",
-    "token" : "93144b288eb1fdccbe46d6fc0f241a51766ecd3d"
+   "level" : "2",
+   "bus_no": "8840",
+   "token" : "93144b288eb1fdccbe46d6fc0f241a51766ecd3d"
 }
 ```
 
@@ -55,3 +55,4 @@ These users in this use-case are not the admin's.
         "Unable to login with provided credentials."
     ]
 }
+```
