@@ -2,7 +2,7 @@
 An *IOT* based *web-service* for **University of Kashmir North Campus Transportation System** which will keep track of university *buses* in real time with a comprehensive transport management solution. This software product is used to monitor the whereabouts of our campus bus fleet and the students / employees who travel in them, along other features.
 This is the **REST API** repository for the product that controls the server logic for the product, made with **Laravel 5.5* , Mysql database.   
 
-**Note:** `The RESTFUL API SPECIFICATIONS are documented in seprate **endpointname*.md file. For each endpoint there will be separate file that will shows its api specification.`
+**Note:** `The RESTFUL API SPECIFICATIONS are documented in seprate **endpointname.md* file. For each endpoint there will be separate file that drafts its api specification.`
 
 ### Getting Started with locate_api
 ___
