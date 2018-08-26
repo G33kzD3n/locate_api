@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +12,11 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::get(
+    '/user',
+    function () {
+        return response(["name"=>"nadeem"], 201);
+    }
+);
 
-Route::get('/user',function (){
-
-	return response(["name"=>"nadeem"],201);
-	
-});
-
-Route::post('/login','UserController@login');
+Route::post('/1.0/login', 'Auth\LoginController@login');

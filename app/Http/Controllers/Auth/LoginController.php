@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -21,19 +25,84 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
+     *
+     * @param App\User $user .
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Create the validator for data.
+     *
+     * @param array $data .
+     *
+     * @return Illuminate\Support\Facades\Validator
+     */
+    protected function validateLoginCreds(array $data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'username'    => 'required|numeric|digits_between:11,11',
+                'password'    => 'required|date_format:"Y-m-d"',
+            ]
+        );
+    }
+
+    /**
+     * Attempt user login with passed creds.
+     *
+     * @param Illuminate\Http\Request $request .
+     *
+     * @return Illuminate\Support\Facades\Response
+     */
+    public function login(Request $request)
+    {
+        $validator = $this->validateLoginCreds($request->all());
+        if ($validator->fails()) {
+            return Response::json(['errors' => $validator->errors()], 404);
+        }
+        if ($this->attemptLogin($request)) {
+            $user = $this->guard()->user();
+            $user->generateToken();
+            return Response::json(
+                [
+                    'data' => $this->userTranform($user)
+                ],
+                201
+            );
+        } else {
+            return Response::json(
+                [
+                    'errors' =>
+                        [
+                           'error_title'  => 'Authentication failure.',
+                           'error_message'=> 'Credentials donot match.',
+                        ]
+                ],
+                401
+            );
+        }
+    }
+
+    /**
+     * Transform user object.
+     *
+     * @param App\User $user .
+     *
+     * @return array
+     */
+    protected function userTranform($user)
+    {
+        return [
+              'bus_no'  => (int)$user->getBusNo(),
+              'token'   => (string)$user->token,
+              'level'   => (int)$user->level
+            ];
     }
 }
