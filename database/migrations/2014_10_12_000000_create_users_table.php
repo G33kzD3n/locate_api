@@ -21,6 +21,14 @@ class CreateUsersTable extends Migration
                 $table->string('password'); //year-month-day 1990-01-01
                 $table->string('token', 60)->unique();
                 $table->enum('level', [0, 1, 2]);
+                $table->string('name');
+                $table->integer('bus_no');
+                $table->string('dept_id');
+                $table->string('course_id');
+                $table->enum('semester', [1, 2, 3, 4, 5, 6]);
+                $table->string('avatar');
+                $table->date('registered_on');
+                $table->bigInteger('phone_no')->unique();
             }
         );
     }

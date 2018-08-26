@@ -61,7 +61,7 @@ The End users in this use-case are not the admin's.
     }
 }
 ```
-
+___
 **Condition** : If 'username' and 'password' validation passes but no user found.
 
 **Code** : `401 BAD REQUEST`
@@ -71,8 +71,8 @@ The End users in this use-case are not the admin's.
 ```json
 {
    "errors": {
-      'error_title'  => 'Authtication Failed.',
-      'error_message'=> 'Credentials donot match.',
+      "error_title"  : "Authtication Failed.",
+      "error_message": "Credentials donot match."
     }
 }
 ```
