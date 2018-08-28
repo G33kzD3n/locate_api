@@ -45,7 +45,7 @@ The End users in this use-case are not the admin's.
 
 **Condition** : If 'username' and 'password' validation fails.
 
-**Code** : `404 BAD REQUEST`
+**Code** : `404 Not Found`
 
 **Content** :
 
@@ -64,15 +64,15 @@ The End users in this use-case are not the admin's.
 ___
 **Condition** : If 'username' and 'password' validation passes but no user found.
 
-**Code** : `401 BAD REQUEST`
+**Code** : `401 Not Found`
 
 **Content** :
 
 ```json
 {
-   "errors": {
-      "error_title"  : "Authtication Failed.",
-      "error_message": "Credentials donot match."
+   "error": {
+      "error_code"  : "authentication_error",
+      "error_message": "Authentication Error occurs when the credentials do not match any database resource."
     }
 }
 ```

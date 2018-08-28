@@ -79,10 +79,10 @@ class LoginController extends Controller
         } else {
             return Response::json(
                 [
-                    'errors' =>
+                    'error' =>
                         [
-                           'error_title'  => 'Authentication failure.',
-                           'error_message'=> 'Credentials donot match.',
+                           'error_code'   => 'authentication_error',
+                           'error_message'=> 'Authentication Error occurs when the credentials do not match any database resource.',
                         ]
                 ],
                 401
@@ -100,8 +100,8 @@ class LoginController extends Controller
     protected function userTranform($user)
     {
         return [
-              'bus_no'  => (int)$user->getBusNo(),
-              'token'   => (string)$user->token,
+              'bus_no'  => (int)$user->bus_no,
+              'token'   => (string)$user->api_token,
               'level'   => (int)$user->level
             ];
     }

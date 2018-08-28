@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
                 $table->increments('id');
                 $table->bigInteger('username')->unique();
                 $table->string('password'); //year-month-day 1990-01-01
-                $table->string('token', 60)->unique();
+                $table->string('api_token', 60)->unique();
                 $table->enum('level', [0, 1, 2]);
                 $table->string('name');
                 $table->integer('bus_no');

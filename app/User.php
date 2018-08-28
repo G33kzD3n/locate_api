@@ -23,7 +23,7 @@ class User extends Authenticatable
         'avatar', 'semester', 'course_id', 'dept_id', 'bus_no'
     ];
 
-    protected $guarded = ['id', 'token'];
+    protected $guarded = ['id', 'api_token'];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -40,18 +40,8 @@ class User extends Authenticatable
      */
     public function generateToken()
     {
-        $this->token = str_random(60);
+        $this->api_token = str_random(60);
         $this->save();
-        return $this->token;
-    }
-
-    /**
-     * Returns the bus_no assigned to this user
-     *
-     * @return busno
-     */
-    public function getBusNo()
-    {
-        return 8840;
+        return $this->api_token;
     }
 }

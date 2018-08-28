@@ -22,12 +22,12 @@ $factory->define(
                     $min = 15045112000,
                     $max = 15045112038
                 ),
-            'password'      => bcrypt('1990-01-01'), //d.o.b as year-month-date
-            'token'         => str_random(60),
-            'level'         => $faker->randomElement(['0', '1', '2']),
-            'name'          => $faker->name,
-            'bus_no'        => $faker->randomElement([8840, 8801, 8839]),
-            'dept_id'       => $faker->randomElement(
+            'password'          => bcrypt('1990-01-01'), //d.o.b as year-month-date
+            'api_token'         => str_random(60),
+            'level'             => $faker->randomElement(['0', '1', '2']),
+            'name'              => $faker->name,
+            'bus_no'            => $faker->randomElement([8840, 8801, 8839]),
+            'dept_id'           => $faker->randomElement(
                 ['PGDCS', 'DCSE', 'PGDENG', 'DMS', 'TD']
             ),
             'course_id'     => $faker->randomElement(

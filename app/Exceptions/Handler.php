@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -40,14 +43,38 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
+    * Render an exception into an HTTP response.
+    *
+    * @param \Illuminate\Http\Request $request
+    * @param \Exception               $exception
+    * @param Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+    * @param Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof NotFoundHttpException) {
+            return response([
+                'error' => [
+                    'error_code'    => 'resource_not_found_error',
+                    'error_message' => 'Resource not found errors arise when your request is trying to access the resources not found in datbase.'
+                ]
+            ], 404);
+        }
+        if ($exception instanceof AccessDeniedHttpException) {
+            return response([ 'error' =>'un-authorized', 'error_message' =>'You are un-authorized for this activity.'], 403);
+        }
         return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json([
+            'error' => [
+                'error_code'    => 'token_error',
+                'error_message' => 'Token errors arise when HTTP Authorization request header isn\'t set for request or the token passed in invalid.'
+            ]
+        ], 401);
     }
 }
