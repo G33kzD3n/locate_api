@@ -5,10 +5,10 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     protected $tables = [
-        'users',
+        'users', 'fees'
     ];
     protected $seeders = [
-        'UsersTableSeeder'
+        'UsersTableSeeder', 'FeesTableSeeder'
     ];
 
     /**

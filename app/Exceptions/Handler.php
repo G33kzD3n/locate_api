@@ -60,11 +60,12 @@ class Handler extends ExceptionHandler
                     'error_code'    => 'resource_not_found_error',
                     'error_message' => 'Resource not found errors arise when your request is trying to access the resources not found in datbase.'
                 ]
-            ], 404);
+            ], 404)
+             ->header('Content-Type', 'application/json');
         }
-        if ($exception instanceof AccessDeniedHttpException) {
-            return response([ 'error' =>'un-authorized', 'error_message' =>'You are un-authorized for this activity.'], 403);
-        }
+        // if ($exception instanceof AccessDeniedHttpException) {
+        //     return response([ 'error' =>'un-authorized', 'error_message' =>'You are un-authorized for this activity.'], 403);
+        // }
         return parent::render($request, $exception);
     }
 
@@ -75,6 +76,7 @@ class Handler extends ExceptionHandler
                 'error_code'    => 'token_error',
                 'error_message' => 'Token errors arise when HTTP Authorization request header isn\'t set for request or the token passed in invalid.'
             ]
-        ], 401);
+        ], 401)
+        ->header('Content-Type', 'application/json');
     }
 }

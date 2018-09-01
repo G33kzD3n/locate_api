@@ -10,11 +10,11 @@
 |
 */
 Route::post('/1.0/login', 'Auth\LoginController@login');
-//authenticated routes
-Route::group(['prefix' => '/1.0', 'middleware' =>'auth:api'], function () {
-    //user profile
-    Route::get('/users/{username}', 'UserController@index');
-});
+
+Route::get('/1.0/users/{username}', 'UserController@index');
+
+Route::get('/1.0/users/{username}/fees/unpaid', 'UserController@showUnPaid');
+
 
 
 /*
@@ -28,12 +28,5 @@ Route::get(
     '/1.0/users',
     function () {
         return \App\User::all();
-    }
-);
-
-Route::get(
-    '/user',
-    function () {
-        return response(["name"=>"nadeem"], 201);
     }
 );
