@@ -12,10 +12,10 @@
 Route::post('/1.0/login', 'Auth\LoginController@login');
 
 Route::get('/1.0/users/{username}', 'UserController@index');
-
 Route::get('/1.0/users/{username}/fees/unpaid', 'UserController@showUnPaid');
 
-
+Route::get('/1.0/buses', 'BusController@index');
+Route::get('/1.0/buses/{bus}', 'BusController@show');
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +27,6 @@ Route::get('/1.0/users/{username}/fees/unpaid', 'UserController@showUnPaid');
 Route::get(
     '/1.0/users',
     function () {
-        return \App\User::all();
+        return \DB::table('users')->orderBy('level', 'desc')->get();
     }
 );

@@ -14,7 +14,7 @@ class FeesTableSeeder extends Seeder
     public function run()
     {
         $faker     = Faker::create();
-        $usernames = DB::table('users')->pluck('username');
+        $usernames = DB::table('users')->where('level', '0')->orWhere('level', '2')->pluck('username');
         foreach (range(1, 9) as $index) {
             foreach ($usernames as $username) {
                 if ($username === 15045112010 || $username === 15045112037) {

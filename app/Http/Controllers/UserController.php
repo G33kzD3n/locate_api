@@ -43,8 +43,8 @@ class UserController extends Controller
                 "name"                        => (string)$user->name,
                 "bus_no"                      => (int)$user->bus_no,
                 "dept_code"                   => (string)$user->dept_id,
-                "course_code"                 => (string)$user->course_id,
-                "semester_level"              => (int)$user->semester,
+                "course_code"                 => $user->course_id,
+                "semester_level"              => $user->semester,
                 "avatar"                      => (string)$user->avatar,
                 "registration_date"           => (string)$user->registered_on,
                 "cell_no"                     => (int)$user->phone_no

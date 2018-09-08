@@ -1,6 +1,7 @@
+
 # Fees
 
-Used to get the fee details for a user, that will showing total fee amount to be paid, and no of unpaid months.
+Used to get the fee details for a user, that will show the total fee amount to be paid, and no of unpaid months.
 
 **URL** : `/api/1.0/users/15045112010/fees/unpaid`
 
@@ -16,7 +17,7 @@ Used to get the fee details for a user, that will showing total fee amount to be
 }
 ```
 
-**Data example for a student**
+**Data example for User Fee.**
 
 ```json
 {
