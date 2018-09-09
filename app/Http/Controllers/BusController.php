@@ -34,7 +34,7 @@ class BusController extends Controller
         $busCoordinator = $busModel->getCoordinator($bus->bus_no);
         $busDriver      = $busModel->getDriver($bus->bus_no);
         $result         =  $this->busTransform($bus->bus_no, $stops, $busCoordinator, $busDriver);
-        return response()->json(['bus'=>$result], 200);
+        return response()->json(['bus'=>$result], 201);
     }
 
     protected function busTransform($bus_no, $stops, $busCoordinator, $busDriver)

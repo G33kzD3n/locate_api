@@ -19,7 +19,7 @@ class CreateStopsTable extends Migration
             $table->string('long');
             $table->integer('bus_no');
             $table->integer('stops_order');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->foreign('bus_no')
                 ->references('bus_no')->on('buses');
         });

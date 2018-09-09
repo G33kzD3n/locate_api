@@ -32,12 +32,18 @@ class StopsTableSeeder extends Seeder
          15 => ['Nawa kadal', '34.095895', '74.798385']
         ];
 
-        // $bus_nos = DB::table('buses')->pluck('bus_no');
+        $this->allotStopsToBus($stop_names, 8840);
+        $this->allotStopsToBus($stop_names, 8839);
+        $this->allotStopsToBus($stop_names, 8801);
+    }
+
+    public function allotStopsToBus($stop_names, $bus_no)
+    {
         foreach (range(1, 15) as $index) {
             Stop::create([
                'lat'         => (string)$stop_names[$index][1],
                'long'        => (string)$stop_names[$index][2],
-               'bus_no'      => 8840,
+               'bus_no'      => $bus_no,
                'name'        => (string)$stop_names[$index][0],
                'stops_order' => (int)$index
             ]);
