@@ -51,6 +51,12 @@ class BusController extends Controller
                 'department' => (string) $busCoordinator->dept_id
             ],
             'stops'       => $stops
+            //[
+                // 'stop_names' => implode(array_map(function ($stop) {
+                //     return $stop[0];
+                // }, $stops), ';'),
+                // 'detailed' => $stops
+             //]
         ];
     }
 }
