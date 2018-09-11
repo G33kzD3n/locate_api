@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             function (Blueprint $table) {
                 $table->increments('id');
                 $table->bigInteger('username')->unique();
-                $table->string('password'); //year-month-day 1990-01-01
+                $table->string('password', 60); //year-month-day 1990-01-01
                 $table->string('api_token', 60)->unique();
                 $table->enum('level', [0, 1, 2])->default(1);
                 $table->string('name');

@@ -9,6 +9,9 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+
 Route::post('/1.0/login', 'Auth\LoginController@login');
 
 Route::get('/1.0/users/{username}', 'UserController@index');

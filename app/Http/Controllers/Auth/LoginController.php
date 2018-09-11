@@ -67,7 +67,7 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return Response::json(['errors' => $validator->errors()], 404);
         }
-        if ($this->attemptLogin($request)) {
+        if (auth()->attempt($request->all())) {
             $user = $this->guard()->user();
             $user->generateToken();
             return Response::json(
