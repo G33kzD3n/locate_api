@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,15 +56,20 @@ class Handler extends ExceptionHandler
         if ($exception instanceof NotFoundHttpException) {
             return response([
                 'error' => [
-                    'error_code'    => 'resource_not_found_error',
-                    'error_message' => 'Resource not found errors arise when your request is trying to access the resources not found in datbase.'
+                    'error_code'               => 'resource_not_found_error',
+                    'error_message'            => 'Resource not found errors arise when your request is trying to access the resources not found in datbase.'
                 ]
             ], 404)
              ->header('Content-Type', 'application/json');
         }
-        // if ($exception instanceof AccessDeniedHttpException) {
-        //     return response([ 'error' =>'un-authorized', 'error_message' =>'You are un-authorized for this activity.'], 403);
-        // }
+        if ($exception instanceof \PDOException) {
+            return response()->json(['error'=> [
+                           'error_code'                 => 'database_exception_error',
+                           'error_message'              => 'Database excetion errors occur when database operations throw exception.',
+                           'database_exception_error'   => $exception->getMessage()
+                        ]
+                ], 400)  ->header('Content-Type', 'application/json');
+        }
         return parent::render($request, $exception);
     }
 

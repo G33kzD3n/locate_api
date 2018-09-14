@@ -13,10 +13,16 @@ class CreateWhereaboutsTable extends Migration
      */
     public function up()
     {
-        // Schema::create('whereabouts', function (Blueprint $table) {
-        //     $table->increments('id');
-        //     $table->timestamps();
-        // });
+        Schema::create('whereabouts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('bus_no');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
+            $table->timestamps();
+            $table->boolean('status')->default(0);
+            $table->foreign('bus_no')
+                ->references('bus_no')->on('buses');
+        });
     }
 
     /**

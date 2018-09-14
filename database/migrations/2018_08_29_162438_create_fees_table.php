@@ -20,8 +20,7 @@ class CreateFeesTable extends Migration
             $table->date('due_date'); //year-month
             $table->boolean('paid');
             $table->foreign('username')
-                ->references('username')->on('users')
-                ->onDelete('cascade');
+                ->references('username')->on('users');
         });
     }
 

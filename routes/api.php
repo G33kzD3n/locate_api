@@ -20,6 +20,9 @@ Route::get('/1.0/users/{username}/fees/unpaid', 'UserController@showUnPaid');
 Route::get('/1.0/buses', 'BusController@index');
 Route::get('/1.0/buses/{bus}', 'BusController@show');
 
+Route::get('/1.0/buses/{bus}/location', 'WhereaboutController@location');
+Route::post('/1.0/buses/{bus}/store', 'WhereaboutController@store');
+
 /*
 |--------------------------------------------------------------------------
 | Testing Routes
