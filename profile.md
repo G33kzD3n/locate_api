@@ -42,7 +42,13 @@ Used to collect a single user resource for profile.
         "semester_level"   :   2,
         "avatar"           :  "15045112038.jpg",
         "registration_date":  "2017-01-22",
-        "cell_no"          :  9059370950
+        "cell_no"          :  9059370950,
+        "stop"             : {
+            "name"    : "Lal Bazar",
+            "lat"     : 34.12752,
+            "lng"     : 34.812982,
+            "stop_no" : 5
+        }
     }
 }
 ```

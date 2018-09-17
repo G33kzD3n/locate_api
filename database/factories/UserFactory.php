@@ -7,7 +7,8 @@ $factory->define(
     function (Faker $faker) {
         return [
                'course_id' => 'undefined',
-               'semester'  => null
+               'semester'  => null,
+               'stop_id'   => null
         ];
     }
 );

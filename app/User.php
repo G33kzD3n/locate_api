@@ -20,7 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'username', 'password', 'level', 'phone_no', 'registered_on',
-        'avatar', 'semester', 'course_id', 'dept_id', 'bus_no'
+        'avatar', 'semester', 'course_id', 'dept_id', 'bus_no', 'stop_id'
     ];
 
     protected $guarded = ['id', 'api_token'];
@@ -43,5 +43,10 @@ class User extends Authenticatable
         $this->api_token = str_random(60);
         $this->save();
         return $this->api_token;
+    }
+
+    public function stop()
+    {
+        return $this->belongsTo(Stop::class);
     }
 }

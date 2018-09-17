@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Fee;
+use App\Stop;
 use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
@@ -47,7 +48,13 @@ class UserController extends Controller
                 "semester_level"              => $user->semester,
                 "avatar"                      => (string)$user->avatar,
                 "registration_date"           => (string)$user->registered_on,
-                "cell_no"                     => (int)$user->phone_no
+                "cell_no"                     => (int)$user->phone_no,
+                "stop"                        => [
+                    'name'       => $user->stop->name,
+                    'lat'        => (double)$user->stop->lat,
+                    'lng'        => (double)$user->stop->long,
+                    'stop_no'    => (int)$user->stop->stops_order
+                ]
         ];
     }
 }
