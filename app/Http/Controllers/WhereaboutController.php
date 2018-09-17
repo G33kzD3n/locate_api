@@ -62,7 +62,7 @@ class WhereaboutController extends Controller
             $data,
             [
                 'lat'     => 'required|numeric',
-                'long'    => 'required|numeric',
+                'lng'     => 'required|numeric',
                 'time'    => 'required|date_format:Y-m-d h:i:s'
             ]
         );
@@ -77,7 +77,7 @@ class WhereaboutController extends Controller
     {
         return [
                 'lat'  => (float) $request['lat'],
-                'long' => (float) $request['long'],
+                'long' => (float) $request['lng'],
                 'time' => $request['time']
             ];
     }
