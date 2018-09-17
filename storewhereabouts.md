@@ -14,7 +14,7 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
 {
     "busno" : "[valid bus no of as bus e.g 8840]",
     "lat"   : "[Latitude of the bus is a number]",
-    "long"  : "[Longitude of the bus is a number]",
+    "lng"  : "[Longitude of the bus is a number]",
     "time"  : "[Time is valid DateTime string in format year-month-day hour:min:sec ]"
 }
 ```
@@ -24,7 +24,7 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
 ```json
 {
    "lat"  : 34.237289,
-   "long" : 74.9990089,
+   "lng" : 74.9990089,
    "time" : "2018-06-10 12:51:23"
 }
 ```
