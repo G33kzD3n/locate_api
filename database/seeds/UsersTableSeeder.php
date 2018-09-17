@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
                 'bus_no'                => $faker->randomElement([8840, 8801, 8839]),
                 'dept_id'               => $faker->randomElement(['PGDCS', 'DCSE', 'PGDENG', 'DMS']),
                 'course_id'             => $faker->randomElement(['MCA', 'BTECHCSE', 'MA', 'IMBA']),
-                'semester'              => $faker->randomElement(['0', '2', '3', '1']),
+                'semester'              => $faker->randomElement(['4', '2', '3', '1']),
                 'avatar'                => "path_to_image",
                 'registered_on'         => $faker->randomElement(['2015-07-10', '2016-01-01', '2017-01-22', '2018-02-02', '2015-06-20']),
                 'phone_no'              => $faker->unique()->numberBetween($min = 9018556691, $max = 9108666691),

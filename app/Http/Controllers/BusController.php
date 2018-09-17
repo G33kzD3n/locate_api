@@ -34,7 +34,14 @@ class BusController extends Controller
         $busCoordinator = $busModel->getCoordinator($bus->bus_no);
         $busDriver      = $busModel->getDriver($bus->bus_no);
         $result         =  $this->busTransform($bus->bus_no, $stops, $busCoordinator, $busDriver);
-        return response()->json(['bus'=>$result], 201);
+        return response()->json(['bus'=>$result], 200);
+    }
+
+    public function showpassengers($bus)
+    {
+        $busModel   = new Bus();
+        $passengers = $busModel->getPassengers($bus->bus_no);
+        return response()->json(['passengers'=>$this->passengerTransform($passengers)], 200);
     }
 
     protected function busTransform($bus_no, $stops, $busCoordinator, $busDriver)
@@ -58,5 +65,27 @@ class BusController extends Controller
                 // 'detailed' => $stops
              //]
         ];
+    }
+
+    protected function passengerTransform($passengers)
+    {
+        return array_map(function ($passenger) {
+            return [
+                    'username'       => (int) $passenger->username,
+                    'name'           => $passenger->uname,
+                    'dept_code'      => $passenger->dept_id,
+                    'course_code'    => $passenger->course_id,
+                    'semester_level' => $passenger->semester,
+                    'avatar'         => $passenger->avatar,
+                    'cell_no'        => (int) $passenger->phone_no,
+                    'level'          => $passenger->level,
+                    'stop'           => [
+                        'name'     => $passenger->stopname,
+                        'lat'      => (float)$passenger->lat,
+                        'lng'      => (float)$passenger->long,
+                        'stop_no'  => (int)$passenger->stops_order
+                ]
+            ];
+        }, $passengers);
     }
 }

@@ -33,6 +33,14 @@ class Bus extends Model
         }, $stops->toArray());
     }
 
+    public function getPassengers($bus_no)
+    {
+        return \DB::select("SELECT u.name as uname, u.username, u.dept_id, u.course_id,u.bus_no,u.phone_no, u.level ,
+            u.semester,u.avatar,s.name as stopname, s.lat, s.long, s.stops_order
+            FROM users as u JOIN stops as s ON s.id = u.stop_id
+            WHERE u.level IN ('0','2') AND u.bus_no = ? ORDER BY s.stops_order ASC", [$bus_no]);
+    }
+
     public function getCoordinator($bus_no)
     {
         return \DB::table('users')->where('level', '2')->where('bus_no', $bus_no)->first();
