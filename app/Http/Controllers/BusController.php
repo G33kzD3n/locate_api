@@ -57,13 +57,16 @@ class BusController extends Controller
                 'cell_no'    => (int) $busCoordinator->phone_no,
                 'department' => (string) $busCoordinator->dept_id
             ],
-            'stops'       => $stops
-            //[
-                // 'stop_names' => implode(array_map(function ($stop) {
-                //     return $stop[0];
-                // }, $stops), ';'),
-                // 'detailed' => $stops
-             //]
+            'stops'       => [
+                'names' => implode(array_map(function ($stop) {
+                    return $stop[0];
+                }, $stops), ';'),
+                'latLngs' => array_map(function ($stop) {
+                    return [
+                        $stop[1], $stop[2]
+                    ];
+                }, $stops)
+             ]
         ];
     }
 

@@ -1,6 +1,6 @@
 # Login
 
-Used to collect Token, Level, Bus No for a registered User.
+Used to collect name, Token, Level, Bus No for a registered User.
 The End users in this use-case are not the admin's.
 
 **URL** : `/api/1.0/login`
@@ -35,6 +35,7 @@ The End users in this use-case are not the admin's.
 
 ```json
 {
+   "name": "Jaeden Frami",
    "bus_no": 8840,
    "token" : "93144b288eb1fdccbe46d6fc0f241a51766ecd3d",
    "level" : 2

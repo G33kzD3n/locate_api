@@ -100,9 +100,10 @@ class LoginController extends Controller
     protected function userTranform($user)
     {
         return [
+              'name'    => (string)$user->name,
               'bus_no'  => (int)$user->bus_no,
               'token'   => (string)$user->api_token,
-              'level'   => (int)$user->level
+              'level'   => (int)$user->level,
             ];
     }
 }
