@@ -44,23 +44,17 @@ Used to collect the coordinator, driver details for a bus..
         "cell_no"     : 9037980134,
         "department"  : "PGDCS"
       },
-      "stops" : [
-        [ "Kashmir University,Main Campus", "34.129881", "74.836936" ],
-        [ "Kanitar", "34.135726", "74.828302" ],
-        ["Omar Colony","34.133820","74.824463"],
-        ["Salfia","34.13890","74.821693"],
-        [ "Lal Bazar","127520","812982" ],
-        [ "Molvi Stop", "34.123011", "74.816494" ],
-        [ "Bota Kadal", "34.120178","74.813594"],
-        [ "Mill Stop", "34.120390","74.806293"],
-        ["Alamgari Bazar","34.119586","74.80666"],
-        [ "Hawal", "34.111408","74.809138"],
-        ["Islamia College","34.104483","74.808966"],
-        [ "Gojwara","34.101022","74.809374"],
-        [ "Rajori kadal", "34.099410", "74.205449"],
-        [ "Kawdara","34.098961","74.802270"],
-        [ "Nawa kadal","34.095895","74.798385"]
-      ]
+      "stops" : {
+        "names"  : "Kashmir University,Main Campus;Kanitar;Omar Colony;Salfia;Lal Bazar;Molvi Stop;Bota Kadal;Mill Stop;Alamgari Bazar;Hawal;Islamia College;Gojwara;Rajori kadal;Kawdara;Nawa kadal",
+        "latLngs": [
+            [ "34.129881", "74.836936" ],
+            [ "34.135726", "74.828302" ],
+            [ "34.133820", "74.824463" ],
+            [ "34.13890", "74.821693" ],
+            [ "34.127520", "34.812982" ],
+            "...... so on"
+        ]
+      }
     }
 }
 ```

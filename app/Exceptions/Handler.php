@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
             return response([
                 'error' => [
                     'error_code'               => 'resource_not_found_error',
-                    'error_message'            => 'Resource not found errors arise when your request is trying to access the resources not found in datbase.'
+                    'error_message'            => 'Resource not found errors arise when your request is trying to access the resources not found in database.'
                 ]
             ], 404)
              ->header('Content-Type', 'application/json');
