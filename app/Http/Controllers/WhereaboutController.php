@@ -18,12 +18,15 @@ class WhereaboutController extends Controller
     {
         $whereaboutModel = new Whereabout();
         $whereabouts     = $whereaboutModel->getLiveLocation($bus);
+        if (!isset($whereabouts->lat)) {
+            abort(404);
+        }
         return response()->json(['bus' => [
             'lat'  => (float)$whereabouts->lat,
             'lng'  => (float)$whereabouts->long,
             'time' => $whereabouts->updated_at
             ]
-        ]);
+        ], 200);
     }
 
     /**
@@ -61,9 +64,9 @@ class WhereaboutController extends Controller
         return Validator::make(
             $data,
             [
-                'lat'     => 'required|numeric',
-                'lng'     => 'required|numeric',
-                'time'    => 'required|date_format:Y-m-d h:i:s'
+                'lat'      => 'required|numeric',
+                'lng'      => 'required|numeric',
+                'time'     => 'required|date_format:Y-m-d h:i:s'
             ]
         );
     }
