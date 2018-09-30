@@ -24,6 +24,9 @@ Route::get('/1.0/buses/{bus}/passengers', 'BusController@showpassengers');
 Route::get('/1.0/buses/{bus}/location', 'WhereaboutController@location');
 Route::post('/1.0/buses/{bus}/store', 'WhereaboutController@store');
 
+Route::post('/1.0/buses/{bus}/breakdown', 'BreakdownController@store');
+
+
 /*
 |--------------------------------------------------------------------------
 | Testing Routes
