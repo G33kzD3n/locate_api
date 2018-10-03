@@ -32,7 +32,7 @@ Used to store the breakdown info.
 
 ```json
 {
-   "type" :"puncture"
+   "type" :"puncture",
    "time" : "2018-06-10 12:51:23"
 }
 ```

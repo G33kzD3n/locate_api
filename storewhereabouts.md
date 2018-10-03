@@ -53,13 +53,15 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
 
 **Code** : `201 Created`
 
-**Content example when record present **
+**Content example when record present**
+
 ```json
 {
   "status": "updated whereabouts"
 }
 ```
 ## Error Response
+
 **Condition** : If 'busno'  passed is not found in database.
 
 **Code** : `404 Not Found`
