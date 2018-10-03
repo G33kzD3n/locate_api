@@ -1,7 +1,16 @@
 # Store
 
 Used to store the whereabouts of the bus, latitude, longitude and time when request was made.
-
+> The **Event** named *location-update* on channel *busno-channel* is generated when this api returns `Response with status code 201 Created`.
+> The api user's must bind to the event-name **location-update** .
+>
+*EXAMPLE* :
+ ```typescript
+  let  locationUpdate = this.pusher.init('busno-channel');
+  locationUpdate.bind('location-update', (data) => {
+      console.log(JSON.stringify(data)
+  });
+```
 **URL** : `/api/1.0/buses/busno/store`
 
 **Method** : `POST`

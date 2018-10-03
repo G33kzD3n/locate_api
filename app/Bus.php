@@ -50,4 +50,9 @@ class Bus extends Model
     {
         return \DB::table('users')->where('level', '1')->where('bus_no', $bus_no)->first();
     }
+
+    public function getPassengersByStopNames($bus_no)
+    {
+        //yet to be completed
+    }
 }
