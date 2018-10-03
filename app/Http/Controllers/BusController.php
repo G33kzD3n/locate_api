@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Bus;
+use Illuminate\Http\Request;
 
 class BusController extends Controller
 {
+    public $stops=[];
+    public $index=1;
+    public $pass =[];
+
     public function index()
     {
         $busModel        = new Bus();
@@ -37,9 +42,10 @@ class BusController extends Controller
         return response()->json(['bus'=>$result], 200);
     }
 
-    public function showpassengers($bus)
+    public function showpassengers(Request $request, $bus)
     {
         $busModel   = new Bus();
+        $stopIds    = \DB::table('stops')->where('bus_no', $bus->bus_no)->pluck('id')->toArray();
         $passengers = $busModel->getPassengers($bus->bus_no);
         return response()->json(['passengers'=>$this->passengerTransform($passengers)], 200);
     }
@@ -83,12 +89,16 @@ class BusController extends Controller
                     'cell_no'        => (int) $passenger->phone_no,
                     'level'          => $passenger->level,
                     'stop'           => [
-                        'name'     => $passenger->stopname,
-                        'lat'      => (float)$passenger->lat,
-                        'lng'      => (float)$passenger->long,
-                        'stop_no'  => (int)$passenger->stops_order
+                        'name'        => $passenger->stopname,
+                        'lat'         => (float)$passenger->lat,
+                        'lng'         => (float)$passenger->long,
+                        'stop_no'     => (int)$passenger->stops_order
                 ]
             ];
         }, $passengers);
+    }
+
+    public function passengerTransformByStopName($passengers)
+    {
     }
 }

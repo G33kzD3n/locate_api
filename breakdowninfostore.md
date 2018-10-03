@@ -1,8 +1,17 @@
-
 # Breakdown Store
 
 Used to store the breakdown info.
-
+> The **Event** named *breakdown-info-created* on channel *busno-channel* is generated when this api returns `Response with status code 201 Created`.
+> The api user's must bind to the event-name **breakdown-info-created** .
+>
+*EXAMPLE* :
+ ```typescript
+  let  breakdownInfoCreated = this.pusher.init('busno-channel');
+  breakdownInfoCreated.bind('breakdown-info-created', (data) => {
+      console.log(JSON.stringify(data)
+  });
+```
+>
 **URL** : `/api/1.0/buses/busno/breakdown`
 
 **Method** : `POST`
