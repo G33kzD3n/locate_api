@@ -18,11 +18,42 @@ class BreakdownController extends Controller
         $breakdownModel = new Breakdown();
         $status         = $breakdownModel->storeBreakdownInfo($bus->bus_no, $request->all());
         if ($status) {
-            $this->sendNotification($bus->bus_no, 'breakdown-info-created', $request);
+            $this->sendNotification($bus->bus_no, 'breakdown-info-created', $request->all());
             return response()->json([
-                'status'  => 'created',
-                'message' => 'The Breakdown message has been saved successfully.'
+                'record_id'=> (int)$status,
+                'status'   => 'created',
+                'message'  => 'The Breakdown message has been saved successfully.'
             ], 201);
+        }
+    }
+
+    /**
+     * Update the breakdown information.
+     * @param Request $request
+     * @param Bus $bus
+     * @param Breakdown $breakdown
+     * @return mixed
+     **/
+    public function update(Request $request, $bus, $breakdown)
+    {
+        $validator = $this->validateUpdateBreakdownCreds($request->all());
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+        $breakdownModel = new Breakdown();
+        $status         = $breakdownModel->updateBreakdownInfo($breakdown, $request->all());
+        if ($status) {
+            $this->sendNotification(
+                $bus->bus_no,
+                'breakdown-info-updated',
+                ['message'=> $request['message'], 'time' =>$request['time']]
+            );
+            return response()->json([
+                'status'  => 'updated',
+                'message' => 'The Breakdown message has been updated for students successfully.'
+            ], 200);
+        } else {
+            abort(404);
         }
     }
 
@@ -39,10 +70,7 @@ class BreakdownController extends Controller
             '603415',
             $options
         );
-        $pusher->trigger($channel, $event, [
-            'type' => (string) $data['type'],
-            'time' => (string) $data['time']
-        ]);
+        $pusher->trigger($channel, $event, $data);
     }
 
     /**
@@ -57,6 +85,17 @@ class BreakdownController extends Controller
             [
                 'type'        => 'required|string',
                 'time'        => 'required|date_format:Y-m-d h:i:s'
+            ]
+        );
+    }
+
+    protected function validateUpdateBreakdownCreds(array $data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'message'           => 'required|string',
+                'time'              => 'required|date_format:Y-m-d h:i:s'
             ]
         );
     }

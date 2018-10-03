@@ -33,6 +33,18 @@ class Breakdown extends Model
         } catch (\Exception $e) {
             throw new \PDOException('Inserting breakdown failed.', 1);
         }
+        return $this->id;
+    }
+
+    public function updateBreakdownInfo($instance, $data)
+    {
+        try {
+            $instance->message    =$data['message'];
+            $instance->created_at =$data['time'];
+            $instance->save();
+        } catch (\Exception $e) {
+            throw new \PDOException('Updating breakdown message failed.', 1);
+        }
         return 1;
     }
 }

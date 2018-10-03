@@ -1,9 +1,15 @@
+
 # Breakdown Store
 
 Used to store the breakdown info.
 > The **Event** named *breakdown-info-created* on channel *busno-channel* is generated when this api returns `Response with status code 201 Created`.
 > The api user's must bind to the event-name **breakdown-info-created** .
->
+ ```json
+ Also the "record_id" in the "success response" must be saved , so that "coordinator" can later "update the message for this breakdown information".
+ ```
+ >
+>NOTE: **busno** is to be passed in the *API-URL* only, not as *Form Payload*.
+
 *EXAMPLE* :
  ```typescript
   let  breakdownInfoCreated = this.pusher.init('busno-channel');
@@ -22,9 +28,9 @@ Used to store the breakdown info.
 
 ```json
 {
-    "busno" : "[valid bus no of as bus e.g 8840]",
-    "type"   : "[valid string]",
-    "time"  : "[Time is valid DateTime string in format year-month-day hour:min:sec ]"
+    "busno" : "[valid bus no of as bus e.g 8840, to be passed in api]",
+    "type"   : "[valid string, to be passed in form.]",
+    "time"  : "[Time is valid DateTime string in format year-month-day hour:min:sec, to be passed in form]"
 }
 ```
 
@@ -45,6 +51,7 @@ Used to store the breakdown info.
 
 ```json
 {
+   "record_id" :"id of the created record",
    "status": "created",
    "message": "The Breakdown message has been saved successfully."
 }

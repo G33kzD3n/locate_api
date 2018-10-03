@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Bus;
 use App\User;
+use App\Breakdown;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -32,6 +33,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('bus', function ($value) {
             return Bus::where('bus_no', $value)->first() ?? abort(404);
+        });
+        Route::bind('breakdown', function ($id) {
+            return Breakdown::where('id', $id)->first() ?? abort(404);
         });
     }
 

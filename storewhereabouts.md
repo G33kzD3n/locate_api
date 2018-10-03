@@ -11,6 +11,9 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
       console.log(JSON.stringify(data)
   });
 ```
+>
+>NOTE: **busno** is to be passed in the *API-URL* only, not as *Form Payload*.
+
 **URL** : `/api/1.0/buses/busno/store`
 
 **Method** : `POST`
@@ -21,10 +24,10 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
 
 ```json
 {
-    "busno" : "[valid bus no of as bus e.g 8840]",
-    "lat"   : "[Latitude of the bus is a number]",
-    "lng"  : "[Longitude of the bus is a number]",
-    "time"  : "[Time is valid DateTime string in format year-month-day hour:min:sec ]"
+    "busno" : "[valid bus no of as bus e.g 8840, to be passed in api]",
+    "lat"   : "[Latitude of the bus is a number,to be passed in form]",
+    "lng"  : "[Longitude of the bus is a number, to be passed in form]",
+    "time"  : "[Time is valid DateTime string in format year-month-day hour:min:sec, to be passed in form]"
 }
 ```
 
