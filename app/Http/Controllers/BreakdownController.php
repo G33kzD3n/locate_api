@@ -18,7 +18,7 @@ class BreakdownController extends Controller
         $breakdownModel = new Breakdown();
         $status         = $breakdownModel->storeBreakdownInfo($bus->bus_no, $request->all());
         if ($status) {
-            $this->sendNotification($bus->bus_no, 'breakdown-info-created', array_merge(['record_id'=> (int)$status], $request->all() ] );
+            $this->sendNotification($bus->bus_no, 'breakdown-info-created', array_merge(['record_id'=> (int)$status], $request->all()));
             return response()->json([
                 'record_id'=> (int)$status,
                 'status'   => 'created',
