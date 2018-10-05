@@ -16,7 +16,7 @@ class BreakdownController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
         $breakdownModel = new Breakdown();
-        $status         = $breakdownModel->storeBreakdownInfo($bus->bus_no, $request->all());
+        $status         = $breakdownModel->storeBreakdownInfo($bus->bus_no, array_merge(['record_id'=> (int)$status],$request->all()));
         if ($status) {
             $this->sendNotification($bus->bus_no, 'breakdown-info-created', $request->all());
             return response()->json([
