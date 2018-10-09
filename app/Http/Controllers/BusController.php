@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class BusController extends Controller
 {
-    public $stops=[];
-    public $index=1;
-    public $pass =[];
-
     public function index()
     {
         $busModel        = new Bus();
@@ -42,12 +38,41 @@ class BusController extends Controller
         return response()->json(['bus'=>$result], 200);
     }
 
-    public function showpassengers(Request $request, $bus)
+    public function showPassengers(Request $request, $bus)
     {
         $busModel   = new Bus();
-        $stopIds    = \DB::table('stops')->where('bus_no', $bus->bus_no)->pluck('id')->toArray();
+        $query      = $request->query('groupby');
+        if ($request->query('groupby') != null && $query == 'stopnames') {
+            $data = $this->getPassengersByStop($busModel, $bus);
+            return response()->json($data);
+        }
         $passengers = $busModel->getPassengers($bus->bus_no);
         return response()->json(['passengers'=>$this->passengerTransform($passengers)], 200);
+    }
+
+    protected function getPassengersByStop($busModel, $bus)
+    {
+        $stopIds                = $busModel->getStopIds($bus->bus_no);
+        $data                   = [];
+        $stops                  = $busModel->getStops($bus->bus_no);
+        $index                  =0;
+        foreach ($stopIds as $id) {
+            array_push(
+                    $data,
+                [
+                    'stop' => [
+                        'name'         => $stops[$index]['name'],
+                        'stop_no'      => $stops[$index]['stop_no'],
+                        'lat'          => (float)$stops[$index]['lat'],
+                        'lng'          => (float)$stops[$index]['lng'],
+                        'passengers '  =>
+                        $this->passengerInfoTransform($busModel->getPassengersOfStop($id))
+                        ]
+                        ]
+                );
+            $index++;
+        }
+        return $data;
     }
 
     protected function busTransform($bus_no, $stops, $busCoordinator, $busDriver)
@@ -98,7 +123,19 @@ class BusController extends Controller
         }, $passengers);
     }
 
-    public function passengerTransformByStopName($passengers)
+    public function passengerInfoTransform($passengers)
     {
+        return array_map(function ($passenger) {
+            return  [
+                'username'         => (int) $passenger->username,
+                'name'             => $passenger->name,
+                'dept_code'        => $passenger->dept_id,
+                'course_code'      => $passenger->course_id,
+                'semester_level'   => (int)$passenger->semester,
+                'avatar'           => $passenger->avatar,
+                'cell_no'          => (int) $passenger->phone_no,
+                'level'            => (int)$passenger->level,
+        ];
+        }, $passengers);
     }
 }

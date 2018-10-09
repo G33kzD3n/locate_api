@@ -34,11 +34,15 @@ class Whereabout extends Model
      **/
     public function store($bus_no, $data)
     {
-        if (! $this->recordExists($bus_no) && $this->insertWhereabouts($bus_no, $data)) {
-            return "insert";
+        try {
+            if (! $this->recordExists($bus_no) && $this->insertWhereabouts($bus_no, $data)) {
+                return "insert";
+            }
+            $this->updateWhereabouts($bus_no, $data);
+            return "update";
+        } catch (\Exception $e) {
+            throw new \PDOException($e->getMessage(), 1);
         }
-        $this->updateWhereabouts($bus_no, $data);
-        return "update";
     }
 
     /**
