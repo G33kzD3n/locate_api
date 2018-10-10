@@ -65,7 +65,7 @@ class BusController extends Controller
                         'stop_no'      => $stops[$index]['stop_no'],
                         'lat'          => (float)$stops[$index]['lat'],
                         'lng'          => (float)$stops[$index]['lng'],
-                        'passengers '  =>
+                        'passengers'   =>
                         $this->passengerInfoTransform($busModel->getPassengersOfStop($id))
                         ]
                         ]
