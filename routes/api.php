@@ -24,6 +24,11 @@ Route::get('/1.0/buses/{bus}/location', 'WhereaboutController@location');
 Route::post('/1.0/buses/{bus}/store', 'WhereaboutController@store');
 Route::post('/1.0/buses/{bus}/breakdown', 'BreakdownController@store');
 Route::put('1.0/buses/{bus}/breakdowns/{breakdown}', 'BreakdownController@update');
+
+// Route::prefix('admin')->group(function () {
+//     Route::post('/login', 'Auth\AdminLoginController@login');
+//     Route::get('/home', 'AdminController@index');
+// });
 /*
 |--------------------------------------------------------------------------
 | Testing Routes
