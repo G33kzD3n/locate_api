@@ -9,60 +9,60 @@ use Illuminate\Support\Facades\Validator;
 
 class BreakdownController extends Controller
 {
-    public function store(Request $request, $bus)
+    public function store (Request $request, $bus)
     {
         $validator = $this->validateBreakdownCreds($request->all());
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
         $breakdownModel = new Breakdown();
-        $status         = $breakdownModel->storeBreakdownInfo($bus->bus_no, $request->all());
+        $status = $breakdownModel->storeBreakdownInfo($bus->bus_no, $request->all());
         if ($status) {
-            $this->sendNotification($bus->bus_no, 'breakdown-info-created', array_merge(['record_id'=> (int)$status], $request->all()));
+            $this->sendNotification($bus->bus_no, 'breakdown-info-created', array_merge(['record_id' => (int)$status], $request->all()));
             return response()->json([
-                'record_id'=> (int)$status,
-                'status'   => 'created',
-                'message'  => 'The Breakdown message has been saved successfully.'
+                'record_id' => (int)$status,
+                'status' => 'created',
+                'message' => 'The Breakdown message has been saved successfully.',
             ], 201);
         }
     }
 
     /**
      * Update the breakdown information.
-     * @param Request $request
-     * @param Bus $bus
+     * @param Request   $request
+     * @param Bus       $bus
      * @param Breakdown $breakdown
      * @return mixed
      **/
-    public function update(Request $request, $bus, $breakdown)
+    public function update (Request $request, $bus, $breakdown)
     {
         $validator = $this->validateUpdateBreakdownCreds($request->all());
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
         $breakdownModel = new Breakdown();
-        $status         = $breakdownModel->updateBreakdownInfo($breakdown, $request->all());
+        $status = $breakdownModel->updateBreakdownInfo($breakdown, $request->all());
         if ($status) {
             $this->sendNotification(
                 $bus->bus_no,
                 'breakdown-info-updated',
-                ['message'=> $request['message'], 'time' =>$request['time']]
+                ['message' => $request['message'], 'time' => $request['time']]
             );
             return response()->json([
-                'status'  => 'updated',
-                'message' => 'The Breakdown message has been updated for students successfully.'
+                'status' => 'updated',
+                'message' => 'The Breakdown message has been updated for students successfully.',
             ], 200);
         } else {
             abort(404);
         }
     }
 
-    public function sendNotification($channel, $event, $data)
+    public function sendNotification ($channel, $event, $data)
     {
-        $channel =(string)$channel.'-channel';
+        $channel = (string)$channel . '-channel';
         $options = [
-        'cluster' => 'ap2',
-        'useTLS'  => true
+            'cluster' => 'ap2',
+            'useTLS' => true,
         ];
         $pusher = new Pusher(
             'fc44950e09ecefa9effd',
@@ -74,28 +74,28 @@ class BreakdownController extends Controller
     }
 
     /**
-    * Create the validator for storing breakdown message.
-    * @param array $data .
-    * @return Illuminate\Support\Facades\Validator
-    */
-    protected function validateBreakdownCreds(array $data)
+     * Create the validator for storing breakdown message.
+     * @param array $data .
+     * @return Illuminate\Support\Facades\Validator
+     */
+    protected function validateBreakdownCreds (array $data)
     {
         return Validator::make(
             $data,
             [
-                'type'        => 'required|string',
-                'time'        => 'required|date_format:Y-m-d h:i:s'
+                'type' => 'required|string',
+                'time' => 'required|date_format:Y-m-d h:i:s',
             ]
         );
     }
 
-    protected function validateUpdateBreakdownCreds(array $data)
+    protected function validateUpdateBreakdownCreds (array $data)
     {
         return Validator::make(
             $data,
             [
-                'message'           => 'required|string',
-                'time'              => 'required|date_format:Y-m-d h:i:s'
+                'message' => 'required|string',
+                'time' => 'required|date_format:Y-m-d h:i:s',
             ]
         );
     }

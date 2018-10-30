@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -69,6 +70,12 @@ class Handler extends ExceptionHandler
                            'database_exception_error'   => $exception->getMessage()
                         ]
                 ], 400)  ->header('Content-Type', 'application/json');
+        }
+        if ($exception instanceof AccessDeniedHttpException) {
+            return response()->json(['error'=> [
+                'authorization_exception_error',
+                'error_message'=> 'Authorization exception errors occur when the user is unauthorized for this request.']
+            ], 403) ->header('Content-Type', 'application/json');
         }
         return parent::render($request, $exception);
     }

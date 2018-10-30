@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Bus extends Model
 {
     /**
-    * Disable the timestamps.
-    */
+     * Disable the timestamps.
+     */
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -16,10 +16,33 @@ class Bus extends Model
      * @var array
      */
     protected $fillable = [
-        'bus_no', 'gps_device_id'
+        'bus_no', 'gps_device_id',
     ];
 
-    public function getBusNos()
+    public function store (array $data)
+    {
+        try {
+            $this->bus_no = $data['bus_no'];
+            $this->gps_device_id = $data['gps_device_id'];
+            $this->save();
+            return $this;
+        } catch (\Exception $e) {
+            throw new \PDOException($e->getMessage(), 1);
+        }
+    }
+
+    public function updateBus ($bus,array $data)
+    {
+        try{
+            \DB::table('buses')->where('bus_no', $bus->bus_no)
+                ->update(['bus_no' =>$data['bus_no'], 'gps_device_id'=>$data['gps_device_id']]);
+            return $bus;
+        }catch(\Exception $e){
+            throw new \PDOException($e->getMessage(), 1);
+        }
+    }
+
+    public function getBusNos ()
     {
         try {
             return \DB::table('buses')->pluck('bus_no');
@@ -28,20 +51,20 @@ class Bus extends Model
         }
     }
 
-    public function getStopNames($bus_no)
+    public function getStopNames ($bus_no)
     {
         try {
-            $stops =  \DB::table('stops')->select('name', 'lat', 'long')->where('bus_no', $bus_no)
-            ->orderBy('stops_order', 'Asc')->get();
+            $stops = \DB::table('stops')->select('name', 'lat', 'long')->where('bus_no', $bus_no)
+                ->orderBy('stops_order', 'Asc')->get();
             return array_map(function ($stop) {
-                return [ $stop->name, $stop->lat, $stop->long];
+                return [$stop->name, $stop->lat, $stop->long];
             }, $stops->toArray());
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
     }
 
-    public function getPassengers($bus_no)
+    public function getPassengers ($bus_no)
     {
         try {
             return \DB::select("SELECT u.name as uname, u.username, u.dept_id, u.course_id,u.bus_no,u.phone_no, u.level ,
@@ -53,7 +76,7 @@ class Bus extends Model
         }
     }
 
-    public function getCoordinator($bus_no)
+    public function getCoordinator ($bus_no)
     {
         try {
             return \DB::table('users')->where('level', '2')->where('bus_no', $bus_no)->first();
@@ -62,7 +85,7 @@ class Bus extends Model
         }
     }
 
-    public function getDriver($bus_no)
+    public function getDriver ($bus_no)
     {
         try {
             return \DB::table('users')->where('level', '1')->where('bus_no', $bus_no)->first();
@@ -71,17 +94,17 @@ class Bus extends Model
         }
     }
 
-    public function getPassengersOfStop($id)
+    public function getPassengersOfStop ($id)
     {
         try {
             return \DB::select("SELECT  u.name, u.username, u.dept_id, u.course_id,u.bus_no,u.phone_no, u.level ,
-            u.semester,u.avatar FROM users as u WHERE u.level IN ('0','2') AND u.stop_id = ? ORDER BY u.stop_id ASC", [ $id ]);
+            u.semester,u.avatar FROM users as u WHERE u.level IN ('0','2') AND u.stop_id = ? ORDER BY u.stop_id ASC", [$id]);
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
     }
 
-    public function getStopIds($bus_no)
+    public function getStopIds ($bus_no)
     {
         try {
             return \DB::table('stops')->where('bus_no', $bus_no)->orderBy('stops_order', 'ASC')->pluck('id')->toArray();
@@ -90,13 +113,13 @@ class Bus extends Model
         }
     }
 
-    public function getStops($bus_no)
+    public function getStops ($bus_no)
     {
         try {
-            $stops =  \DB::table('stops')->select('stops_order', 'name', 'lat', 'long')->where('bus_no', $bus_no)
-            ->orderBy('stops_order', 'Asc')->get();
+            $stops = \DB::table('stops')->select('stops_order', 'name', 'lat', 'long')->where('bus_no', $bus_no)
+                ->orderBy('stops_order', 'Asc')->get();
             return array_map(function ($stop) {
-                return ['stop_no' => $stop->stops_order, 'name'=> $stop->name, 'lat'=>$stop->lat, 'lng'=>$stop->long];
+                return ['stop_no' => $stop->stops_order, 'name' => $stop->name, 'lat' => $stop->lat, 'lng' => $stop->long];
             }, $stops->toArray());
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);

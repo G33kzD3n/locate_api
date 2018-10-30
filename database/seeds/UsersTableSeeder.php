@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Admin;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,18 @@ class UsersTableSeeder extends Seeder
         $this->createStudents(12, 8801, ['28', '21', '23', '24', '22', '24', '24', '28', '20', '28', '27', '30', '31', '32', '34', '23', '20', '22']);
         $this->createCordinators(3);
         $this->createDrivers(3);
+        $this->createAdmin();
+    }
+
+    public function createAdmin()
+    {
+        Admin::create([
+            'username'  => '@jhondoe',
+            'email'     => 'jhondoe@gmail.com',
+            'password'  => bcrypt('stranger'),
+            'api_token' => str_random(60),
+            'name'      => 'Jhon Doe'
+        ]);
     }
 
     public function createStudents($no, $bus_no, array $stops)

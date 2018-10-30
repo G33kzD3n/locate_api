@@ -1,0 +1,72 @@
+
+# Admin Login  
+  
+Used to collect admin object along with token on successfull login.
+> **Note** : The admin account has , use the username and password to login as admin.
+```
+	username : @jhondoe,
+	password : stranger
+``` 
+  
+**URL** : `/api/admin/1.0/login`  
+  
+**Method** : `POST`  
+  
+**Auth required** : NO  
+  
+**Data constraints**  
+  
+```json  
+{  
+    "username" : "[valid admin username]",  
+    "password" : "[valid password string]"  
+}  
+```  
+  
+**Data example for a student**  
+  
+```json  
+{  
+    "username" : "@jhondoe",  
+    "password" : "stranger"  
+}  
+```  
+  
+## Success Response  
+  
+**Code** : `200 OK`  
+  
+**Content example**  
+  
+```json  
+{  
+   "data": {
+        "username" : "@jhondoe",
+        "api_token": "SBXnFdAsfXZVwKXnwCdSG0gcTallO0EO2Z2af0YonmG1GNbRQzw70KEZMSCE",
+        "name"     : "Jhon Doe",
+        "email"    : "jhondoe@gmail.com",
+        "avatar"   : null
+    } 
+}  
+```  
+  
+## Error Response  
+  
+**Condition** : If 'username' and 'password' validation fails.  
+  
+**Code** : `404 Not Found`  
+  
+**Content** :  
+  
+```json  
+{  
+   "errors": {  
+       "username": [  
+            "The username is required"  
+        ],  
+        "password": [  
+            "The password is required"  
+        ]  
+    }  
+}  
+```  

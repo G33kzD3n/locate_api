@@ -25,10 +25,23 @@ Route::post('/1.0/buses/{bus}/store', 'WhereaboutController@store');
 Route::post('/1.0/buses/{bus}/breakdown', 'BreakdownController@store');
 Route::put('1.0/buses/{bus}/breakdowns/{breakdown}', 'BreakdownController@update');
 
-// Route::prefix('admin')->group(function () {
-//     Route::post('/login', 'Auth\AdminLoginController@login');
-//     Route::get('/home', 'AdminController@index');
-// });
+
+/*
+ * Route for admin.
+ **/
+Route::group(['prefix' => 'admin'], function () {
+    Route::post('/1.0/login', 'Auth\AdminLoginController@login');
+});
+
+/*
+ * Authenticated route groups for admin
+ **/
+Route::group(['prefix' => 'admin', 'middleware' => 'admin:admin'], function () {
+    //store and edit bus api.
+    Route::post('/1.0/buses/create','BusController@store');
+    Route::put('1.0/buses/{bus}/edit','BusController@edit');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Testing Routes
