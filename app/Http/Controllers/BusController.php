@@ -64,6 +64,14 @@ class BusController extends Controller
             return response()->json(['status'=>'updated'],201);
         }
     }
+    public function delete($bus){
+        $busModel = new Bus();
+        $status = $busModel->deleteBus($bus);
+        if($status instanceof  \Exception){
+            return $status;
+        }
+        return response()->json(['status'=>'deleted'],200);
+    }
 
     /**
      * Show a bus resource.
@@ -86,6 +94,9 @@ class BusController extends Controller
         $query = $request->query('groupby');
         if ($request->query('groupby') != null && $query == 'stopnames') {
             $data = $this->getPassengersByStop($busModel, $bus);
+            if(count($data)==0){
+                return response()->json(['status'=>'No passengers yet for this bus'],200);
+            }
             return response()->json($data);
         }
         $passengers = $busModel->getPassengers($bus->bus_no);
@@ -121,16 +132,16 @@ class BusController extends Controller
     {
         return [
             'bus_no' => $bus_no,
-            'driver' => [
-                'name' => (string)$busDriver->name,
+            'driver' => is_null($busDriver) ? [] : [
+                  'name' => (string)$busDriver->name,
                 'cell_no' => (int)$busDriver->phone_no,
             ],
-            'cordinator' => [
+            'cordinator' =>is_null($busDriver) ? [] : [
                 'name' => (string)$busCoordinator->name,
                 'cell_no' => (int)$busCoordinator->phone_no,
                 'department' => (string)$busCoordinator->dept_id,
             ],
-            'stops' => [
+            'stops' => is_null($busDriver)?[] :[
                 'names' => implode(array_map(function ($stop) {
                     return $stop[0];
                 }, $stops), ';'),

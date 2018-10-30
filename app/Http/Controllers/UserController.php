@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Fee;
 use App\Stop;
 use App\User;
+use Illuminate\Support\Facades\Request;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
         return response()->json(['data' => $this->userTranform($user)], 200);
     }
 
-    public function edit ($user)
+    public function edit (Request $request,$user)
     {
         return $user;
     }

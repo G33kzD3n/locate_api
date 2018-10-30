@@ -30,7 +30,13 @@ class Bus extends Model
             throw new \PDOException($e->getMessage(), 1);
         }
     }
-
+    public function deleteBus($bus){
+        try{
+            return \DB::table('buses')->where('bus_no', '=', $bus->bus_no)->delete();
+        }catch(\Exception $e){
+            throw new \PDOException($e->getMessage(), 1);
+        }
+    }
     public function updateBus ($bus,array $data)
     {
         try{
@@ -56,9 +62,13 @@ class Bus extends Model
         try {
             $stops = \DB::table('stops')->select('name', 'lat', 'long')->where('bus_no', $bus_no)
                 ->orderBy('stops_order', 'Asc')->get();
-            return array_map(function ($stop) {
-                return [$stop->name, $stop->lat, $stop->long];
-            }, $stops->toArray());
+            if(count($stops)==0){
+                return null;
+            }else{
+                return array_map(function ($stop) {
+                    return [$stop->name, $stop->lat, $stop->long];
+                }, $stops->toArray());
+            }
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
@@ -79,7 +89,12 @@ class Bus extends Model
     public function getCoordinator ($bus_no)
     {
         try {
-            return \DB::table('users')->where('level', '2')->where('bus_no', $bus_no)->first();
+            $coordinator = \DB::table('users')->where('level', '2')->where('bus_no', $bus_no)->first();
+            if(count($coordinator) == 0){
+                return null;
+            }else{
+                return $coordinator;
+            }
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
@@ -88,7 +103,12 @@ class Bus extends Model
     public function getDriver ($bus_no)
     {
         try {
-            return \DB::table('users')->where('level', '1')->where('bus_no', $bus_no)->first();
+            $driver =  \DB::table('users')->where('level', '1')->where('bus_no', $bus_no)->first();
+            if(count($driver) == 0){
+                return null;
+            }else{
+                return $driver;
+            }
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
