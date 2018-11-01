@@ -19,7 +19,10 @@ class CreateBreakdownsTable extends Migration
             $table->string('type');
             $table->text('message')->nullable();
             $table->timestamps();
-            $table->foreign('bus_no')->references('bus_no')->on('buses');
+            $table->foreign('bus_no')
+                ->references('bus_no')->on('buses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

@@ -15,7 +15,10 @@ class AddStopIdToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('stop_id')->unsigned()->nullable();
-            $table->foreign('stop_id')->references('id')->on('stops');
+            $table->foreign('stop_id')
+                ->references('id')->on('stops')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

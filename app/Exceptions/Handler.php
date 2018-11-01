@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \PDOException) {
             return response()->json(['error'=> [
                            'error_code'                 => 'database_exception_error',
-                           'error_message'              => 'Database excetion errors occur when database operations throw exception.',
+                           'error_message'              => 'Database exception errors occur when database operations throw exception.',
                            'database_exception_error'   => $exception->getMessage()
                         ]
                 ], 400)  ->header('Content-Type', 'application/json');

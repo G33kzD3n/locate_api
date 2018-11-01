@@ -21,7 +21,9 @@ class CreateWhereaboutsTable extends Migration
             $table->timestamps();
             $table->boolean('status')->default(0);
             $table->foreign('bus_no')
-                ->references('bus_no')->on('buses');
+                ->references('bus_no')->on('buses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

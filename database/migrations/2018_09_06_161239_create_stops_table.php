@@ -21,7 +21,9 @@ class CreateStopsTable extends Migration
             $table->integer('stops_order');
             $table->string('name');
             $table->foreign('bus_no')
-                ->references('bus_no')->on('buses');
+                ->references('bus_no')->on('buses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

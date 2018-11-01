@@ -62,7 +62,7 @@ class Bus extends Model
         try {
             $stops = \DB::table('stops')->select('name', 'lat', 'long')->where('bus_no', $bus_no)
                 ->orderBy('stops_order', 'Asc')->get();
-            if(count($stops)==0){
+            if(count($stops->toArray())==0){
                 return null;
             }else{
                 return array_map(function ($stop) {
@@ -90,7 +90,8 @@ class Bus extends Model
     {
         try {
             $coordinator = \DB::table('users')->where('level', '2')->where('bus_no', $bus_no)->first();
-            if(count($coordinator) == 0){
+//            print_r($coordinator);
+            if($coordinator == null){
                 return null;
             }else{
                 return $coordinator;
@@ -104,8 +105,8 @@ class Bus extends Model
     {
         try {
             $driver =  \DB::table('users')->where('level', '1')->where('bus_no', $bus_no)->first();
-            if(count($driver) == 0){
-                return null;
+            if($driver == null){
+                return $driver;
             }else{
                 return $driver;
             }

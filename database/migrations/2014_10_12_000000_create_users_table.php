@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
                 $table->string('dept_id');
                 $table->string('course_id')->default('undefined');
                 $table->enum('semester', [1, 2, 3, 4])->nullable();
-                $table->string('avatar');
+                $table->string('avatar')->nullable();
                 $table->date('registered_on');
                 $table->bigInteger('phone_no')->unique();
             }
