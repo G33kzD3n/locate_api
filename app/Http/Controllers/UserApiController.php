@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class UserApiController extends Controller
 {
-    protected function validateRequestData ($request)
+    protected function validateRequestData($request)
     {
         if ((int)$request['level'] == 0) {
             return $this->validateStudentCreds($request);
-        } else if ((int)$request['level'] == 2) {
+        } elseif ((int)$request['level'] == 2) {
             return $this->validateCordinatorCreds($request);
-        } else if ((int)$request['level'] == 1) {
+        } elseif ((int)$request['level'] == 1) {
             return $this->validateDriverCreds($request);
         } else {
             return response()
@@ -22,13 +22,13 @@ class UserApiController extends Controller
         }
     }
 
-    protected function update (Request $request, User $user)
+    protected function update(Request $request, User $user)
     {
         if (!$this->hasNewAvatar($request)) {
             //no new avatar update the user without avatar.
             $userModel = new User();
-            $data = array_except($request->all(), ['_method', 'avatar']);
-            $status = $userModel->updateUserWithoutAvatar($data, $user);
+            $data      = array_except($request->all(), ['_method', 'avatar']);
+            $status    = $userModel->updateUserWithoutAvatar($data, $user);
             if ($status instanceof \Exception) {
                 return $status;
             }
@@ -36,28 +36,28 @@ class UserApiController extends Controller
             //move new file to avatars
             try {
                 $extension = $request->file('avatar')->guessClientExtension();
-                $filename = time() . 'img.' . $extension;
+                $filename  = time() . 'img.' . $extension;
                 $request->file('avatar')->move('avatars', $filename);
-                //remove previous file,
-                if($user->avatar!=null){
+                //remove previous file of user.
+                if ($user->avatar != null) {
                     unlink('avatars/' . $user->avatar);
                 }
             } catch (\Exception $e) {
-                //remove new uploaded image
+                //remove new uploaded image when error.
                 unlink('avatars/'.$filename);
                 return $e;
             }
-            $data = array_except($request->all(), ['_method']);
+            $data           = array_except($request->all(), ['_method']);
             $data['avatar'] = $filename;
-            $userModel = new User();
-            $status = $userModel->updateUserWithAvatar($data, $user);
+            $userModel      = new User();
+            $status         = $userModel->updateUserWithAvatar($data, $user);
             if ($status instanceof \Exception) {
                 return $status;
             }
         }
     }
 
-    protected function imageHasValidSize (Request $request)
+    protected function imageHasValidSize(Request $request)
     {
         if ($request->file('avatar')->getSize() <= 400000) {
             return true;
@@ -65,7 +65,7 @@ class UserApiController extends Controller
         return false;
     }
 
-    protected function isImage (Request $request)
+    protected function isImage(Request $request)
     {
         try {
             $fileType = explode('/', $request->file('avatar')->getMimeType())[0];
@@ -76,10 +76,9 @@ class UserApiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['errors' => 'The avatar is not an image.'], 422);
         }
-
     }
 
-    private function removeExistingAvatar (User $user)
+    private function removeExistingAvatar(User $user)
     {
         try {
             unlink('avatars/' . $user->avatar);
@@ -88,7 +87,7 @@ class UserApiController extends Controller
         }
     }
 
-    private function hasNewAvatar (Request $request)
+    private function hasNewAvatar(Request $request)
     {
         if ($request->file('avatar') != null) {
             return true;
@@ -101,7 +100,7 @@ class UserApiController extends Controller
      * @param App\User $user .
      * @return array
      */
-    protected function userTranform ($user)
+    protected function userTranform($user)
     {
         $baseurl= env('APP_URL');
         return [
@@ -111,7 +110,7 @@ class UserApiController extends Controller
             "dept_code"         => (string)$user->dept_id,
             "course_code"       => $user->course_id,
             "semester_level"    => $user->semester,
-            "avatar"            => $baseurl.'/avatars/'.$user->avatar,
+            "avatar"            => env('APP_URL').':8000/avatars/'.$user->avatar,
             "registration_date" => (string)$user->registered_on,
             "cell_no"           => (int)$user->phone_no,
             "stop"              => $user->stop != null ? [
@@ -119,7 +118,7 @@ class UserApiController extends Controller
                 'lat'     => (double)$user->stop->lat,
                 'lng'     => (double)$user->stop->long,
                 'stop_no' => (int)$user->stop->stops_order,
-            ] : null,
+            ] : [],
         ];
     }
 
@@ -130,7 +129,7 @@ class UserApiController extends Controller
      *  'name', 'username', 'password', 'level', 'phone_no', 'registered_on',
      * 'avatar', 'semester', 'course_id', 'dept_id', 'bus_no', 'stop_id'
      */
-    protected function validateStudentCreds (array $data)
+    protected function validateStudentCreds(array $data)
     {
         return Validator::make(
             $data,
@@ -149,7 +148,7 @@ class UserApiController extends Controller
         );
     }
 
-    protected function validateCordinatorCreds( array $data)
+    protected function validateCordinatorCreds(array $data)
     {
         return Validator::make(
             $data,
@@ -166,7 +165,7 @@ class UserApiController extends Controller
         );
     }
 
-    protected function validateDriverCreds (array $data)
+    protected function validateDriverCreds(array $data)
     {
         return Validator::make(
             $data,
@@ -178,7 +177,6 @@ class UserApiController extends Controller
                 'registered_on' => 'required|date_format:Y-m-d',
                 'dept_id'       => 'required|string',
                 'bus_no'        => 'required|numeric|digits_between:4,4',
-                'stop_id'       => 'required|numeric',
             ]
         );
     }

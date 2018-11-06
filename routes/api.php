@@ -38,12 +38,12 @@ Route::group(['prefix' => 'admin'], function () {
  **/
 Route::group(['prefix' => 'admin', 'middleware' => 'admin:admin'], function () {
     //store,edit,delete bus api.
-    Route::post('/1.0/buses/create','BusController@store');
-    Route::put('1.0/buses/{bus}/edit','BusController@edit');
-    Route::delete('1.0/buses/{bus}/delete','BusController@delete');
+    Route::post('/1.0/buses/create', 'BusController@store');
+    Route::put('1.0/buses/{bus}/edit', 'BusController@edit');
+    Route::delete('1.0/buses/{bus}/delete', 'BusController@delete');
 
     //edit existing users
-    Route::patch('1.0/users/{username}/edit','UserController@edit');
+    Route::patch('1.0/users/{username}/edit', 'UserController@edit');
 });
 
 /*
