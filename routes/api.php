@@ -31,6 +31,13 @@ Route::put('1.0/buses/{bus}/breakdowns/{breakdown}', 'BreakdownController@update
  **/
 Route::group(['prefix' => 'admin'], function () {
     Route::post('/1.0/login', 'Auth\AdminLoginController@login');
+    Route::get(
+    '/1.0/users',
+        function () {
+            return \DB::table('users')->orderBy('level', 'desc')->get();
+        }
+    );
+    Route::get('/1.0/buses', 'BusController@index');
 });
 
 /*

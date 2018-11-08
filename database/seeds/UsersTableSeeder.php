@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
                 'dept_id'               => $faker->randomElement(['PGDCS', 'DCSE', 'PGDENG', 'DMS']),
                 'course_id'             => $faker->randomElement(['MCA', 'BTECHCSE', 'MA', 'IMBA']),
                 'semester'              => $faker->randomElement(['4', '2', '3', '1']),
-                'avatar'                => "path_to_image",
+                'avatar'                => null,
                 'registered_on'         => $faker->randomElement(['2015-07-10', '2016-01-01', '2017-01-22', '2018-02-02', '2015-06-20']),
                 'phone_no'              => $faker->unique()->numberBetween($min = 9018556691, $max = 9108666691),
                  'stop_id'              => $faker->randomElement($stops),
@@ -69,7 +69,7 @@ class UsersTableSeeder extends Seeder
              'bus_no'            => $buses[$index - 1],
              'dept_id'           => $faker->randomElement(['PGDCS', 'DCSE', 'PGDENG', 'DMS']),
              'phone_no'          => $faker->unique()->numberBetween($min = 9797556691, $max = 9797666691),
-             'avatar'            => "path_to_image",
+             'avatar'            => null,
              'registered_on'     => $faker->randomElement(['2001-01-12', '2006-11-21', '2005-11-21', '2016-12-02', '2005-06-20']),
              'stop_id'           => $faker->randomElement([1, 12, 13, 14, 15, 6, 7, 9, 2, 20, 10])
             ]);
@@ -90,7 +90,7 @@ class UsersTableSeeder extends Seeder
              'bus_no'             => $buses[$index - 1],
              'dept_id'            => 'TD',
              'phone_no'           => $faker->unique()->numberBetween($min = 9419556691, $max = 9419666691),
-             'avatar'             => "path_to_image",
+             'avatar'             => null,
              'registered_on'      => $faker->randomElement(['2010-01-12', '1999-11-21', '2015-11-21', '2015-12-02', '2005-06-20'])
             ]);
         }

@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 class BusController extends Controller
 {
-    public function index ()
+    public function index()
     {
         $busModel = new Bus();
-        $busNos = $busModel->getBusNos();
-        $result = array_map(function ($bus_no) {
+        $busNos   = $busModel->getBusNos();
+        $result   = array_map(function ($bus_no) {
             $busModel = new Bus();
             return $this->busTransform(
                 $bus_no,
@@ -24,53 +24,57 @@ class BusController extends Controller
         return response()->json(['buses' => $result], 201);
     }
 
-
     /**
      * Store a new bus.
      * @param Request $request
      * @return Bus|\Illuminate\Http\JsonResponse
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validator = $this->validateBusCreds($request->all());
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         $busModel = new Bus();
-        $status = $busModel->store($request->all());
-        if($status instanceof  \Exception){
+        $status   = $busModel->store($request->all());
+        if ($status instanceof  \Exception) {
             return $status;
         }
-        if($status instanceof  Bus){
-            return response()->json(['status'=>'created'],201);
+        if ($status instanceof  Bus) {
+            return response()->json(['status'=>'created'], 201);
         }
     }
 
-    public function edit(Request $request, $bus){
+    public function edit(Request $request, $bus)
+    {
         $validator = Validator::make(
             $request->all(),
             [
-                'bus_no'      => 'required|numeric|digits_between:4,4',
+                'bus_no'             => 'required|numeric|digits_between:4,4',
                 'gps_device_id'      => 'required|string'
-            ]);
+            ]
+        );
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         $busModel = new Bus();
-        $status = $busModel->updateBus($bus,$request->all());
-        if($status instanceof  \Exception){
+        $status   = $busModel->updateBus($bus, $request->all());
+        if ($status instanceof  \Exception) {
             return $status;
         }
-        if($status instanceof  Bus){
-            return response()->json(['status'=>'updated'],201);
+        if ($status instanceof  Bus) {
+            return response()->json(['status'=>'updated'], 201);
         }
     }
-    public function delete($bus){
+
+    public function delete($bus)
+    {
         $busModel = new Bus();
-        $status = $busModel->deleteBus($bus);
-        if($status instanceof  \Exception){
+        $status   = $busModel->deleteBus($bus);
+        if ($status instanceof  \Exception) {
             return $status;
         }
-        return response()->json(['status'=>'deleted'],200);
+        return response()->json(['status'=>'deleted'], 200);
     }
 
     /**
@@ -78,24 +82,24 @@ class BusController extends Controller
      * @param $bus
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show ($bus)
+    public function show($bus)
     {
-        $busModel = new Bus();
-        $stops = $busModel->getStopNames($bus->bus_no);
+        $busModel       = new Bus();
+        $stops          = $busModel->getStopNames($bus->bus_no);
         $busCoordinator = $busModel->getCoordinator($bus->bus_no);
-        $busDriver = $busModel->getDriver($bus->bus_no);
-        $result = $this->busTransform($bus->bus_no, $stops, $busCoordinator, $busDriver);
+        $busDriver      = $busModel->getDriver($bus->bus_no);
+        $result         = $this->busTransform($bus->bus_no, $stops, $busCoordinator, $busDriver);
         return response()->json(['bus' => $result], 200);
     }
 
-    public function showPassengers (Request $request, $bus)
+    public function showPassengers(Request $request, $bus)
     {
         $busModel = new Bus();
-        $query = $request->query('groupby');
+        $query    = $request->query('groupby');
         if ($request->query('groupby') != null && $query == 'stopnames') {
             $data = $this->getPassengersByStop($busModel, $bus);
-            if(count($data)==0){
-                return response()->json(['status'=>'No passengers yet for this bus'],200);
+            if (count($data) == 0) {
+                return response()->json(['status'=>'No passengers yet for this bus'], 200);
             }
             return response()->json($data);
         }
@@ -103,21 +107,21 @@ class BusController extends Controller
         return response()->json(['passengers' => $this->passengerTransform($passengers)], 200);
     }
 
-    protected function getPassengersByStop ($busModel, $bus)
+    protected function getPassengersByStop($busModel, $bus)
     {
         $stopIds = $busModel->getStopIds($bus->bus_no);
-        $data = [];
-        $stops = $busModel->getStops($bus->bus_no);
-        $index = 0;
+        $data    = [];
+        $stops   = $busModel->getStops($bus->bus_no);
+        $index   = 0;
         foreach ($stopIds as $id) {
             array_push(
                 $data,
                 [
                     'stop' => [
-                        'name' => $stops[$index]['name'],
-                        'stop_no' => $stops[$index]['stop_no'],
-                        'lat' => (float)$stops[$index]['lat'],
-                        'lng' => (float)$stops[$index]['lng'],
+                        'name'       => $stops[$index]['name'],
+                        'stop_no'    => $stops[$index]['stop_no'],
+                        'lat'        => (float)$stops[$index]['lat'],
+                        'lng'        => (float)$stops[$index]['lng'],
                         'passengers' =>
                             $this->passengerInfoTransform($busModel->getPassengersOfStop($id)),
                     ],
@@ -128,20 +132,20 @@ class BusController extends Controller
         return $data;
     }
 
-    protected function busTransform ($bus_no, $stops, $busCoordinator, $busDriver)
+    protected function busTransform($bus_no, $stops, $busCoordinator, $busDriver)
     {
         return [
             'bus_no' => $bus_no,
             'driver' => is_null($busDriver) ? [] : [
-                  'name' => (string)$busDriver->name,
+                  'name'  => (string)$busDriver->name,
                 'cell_no' => (int)$busDriver->phone_no,
             ],
-            'cordinator' =>is_null($busDriver) ? [] : [
-                'name' => (string)$busCoordinator->name,
-                'cell_no' => (int)$busCoordinator->phone_no,
+            'cordinator' => is_null($busCoordinator) ? [] : [
+                'name'       => (string)$busCoordinator->name,
+                'cell_no'    => (int)$busCoordinator->phone_no,
                 'department' => (string)$busCoordinator->dept_id,
             ],
-            'stops' => is_null($busDriver)?[] :[
+            'stops' => is_null($stops) ? [] :[
                 'names' => implode(array_map(function ($stop) {
                     return $stop[0];
                 }, $stops), ';'),
@@ -150,47 +154,55 @@ class BusController extends Controller
                         $stop[1], $stop[2],
                     ];
                 }, $stops),
+                'stop_detail' => array_map(function ($stop) {
+                    return [
+                        'id'     => $stop['id'],
+                        'name'   => $stop[0],
+                        'stop_no'=> $stop['stop_no']
+                    ];
+                }, $stops)
             ],
         ];
     }
 
-    protected function passengerTransform ($passengers)
+    protected function passengerTransform($passengers)
     {
         return array_map(function ($passenger) {
             return [
-                'username' => (int)$passenger->username,
-                'name' => $passenger->uname,
-                'dept_code' => $passenger->dept_id,
-                'course_code' => $passenger->course_id,
+                'username'       => (int)$passenger->username,
+                'name'           => $passenger->uname,
+                'dept_code'      => $passenger->dept_id,
+                'course_code'    => $passenger->course_id,
                 'semester_level' => $passenger->semester,
-                'avatar' => $passenger->avatar,
-                'cell_no' => (int)$passenger->phone_no,
-                'level' => $passenger->level,
-                'stop' => [
-                    'name' => $passenger->stopname,
-                    'lat' => (float)$passenger->lat,
-                    'lng' => (float)$passenger->long,
+                'avatar'         => $passenger->avatar,
+                'cell_no'        => (int)$passenger->phone_no,
+                'level'          => $passenger->level,
+                'stop'           => [
+                    'name'    => $passenger->stopname,
+                    'lat'     => (float)$passenger->lat,
+                    'lng'     => (float)$passenger->long,
                     'stop_no' => (int)$passenger->stops_order,
                 ],
             ];
         }, $passengers);
     }
 
-    public function passengerInfoTransform ($passengers)
+    public function passengerInfoTransform($passengers)
     {
         return array_map(function ($passenger) {
             return [
-                'username' => (int)$passenger->username,
-                'name' => $passenger->name,
-                'dept_code' => $passenger->dept_id,
-                'course_code' => $passenger->course_id,
+                'username'       => (int)$passenger->username,
+                'name'           => $passenger->name,
+                'dept_code'      => $passenger->dept_id,
+                'course_code'    => $passenger->course_id,
                 'semester_level' => (int)$passenger->semester,
-                'avatar' => $passenger->avatar,
-                'cell_no' => (int)$passenger->phone_no,
-                'level' => (int)$passenger->level,
+                'avatar'         => $passenger->avatar,
+                'cell_no'        => (int)$passenger->phone_no,
+                'level'          => (int)$passenger->level,
             ];
         }, $passengers);
     }
+
     /**
      * Create the validator for bus.
      * @param array $data .
@@ -201,7 +213,7 @@ class BusController extends Controller
         return Validator::make(
             $data,
             [
-                'bus_no'      => 'required|numeric|unique:buses|digits_between:4,4',
+                'bus_no'             => 'required|numeric|unique:buses|digits_between:4,4',
                 'gps_device_id'      => 'required|string|unique:buses'
             ]
         );

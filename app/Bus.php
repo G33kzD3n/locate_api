@@ -19,10 +19,10 @@ class Bus extends Model
         'bus_no', 'gps_device_id',
     ];
 
-    public function store (array $data)
+    public function store(array $data)
     {
         try {
-            $this->bus_no = $data['bus_no'];
+            $this->bus_no        = $data['bus_no'];
             $this->gps_device_id = $data['gps_device_id'];
             $this->save();
             return $this;
@@ -30,25 +30,28 @@ class Bus extends Model
             throw new \PDOException($e->getMessage(), 1);
         }
     }
-    public function deleteBus($bus){
-        try{
-            return \DB::table('buses')->where('bus_no', '=', $bus->bus_no)->delete();
-        }catch(\Exception $e){
-            throw new \PDOException($e->getMessage(), 1);
-        }
-    }
-    public function updateBus ($bus,array $data)
+
+    public function deleteBus($bus)
     {
-        try{
-            \DB::table('buses')->where('bus_no', $bus->bus_no)
-                ->update(['bus_no' =>$data['bus_no'], 'gps_device_id'=>$data['gps_device_id']]);
-            return $bus;
-        }catch(\Exception $e){
+        try {
+            return \DB::table('buses')->where('bus_no', '=', $bus->bus_no)->delete();
+        } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
     }
 
-    public function getBusNos ()
+    public function updateBus($bus, array $data)
+    {
+        try {
+            \DB::table('buses')->where('bus_no', $bus->bus_no)
+                ->update(['bus_no' =>$data['bus_no'], 'gps_device_id'=>$data['gps_device_id']]);
+            return $bus;
+        } catch (\Exception $e) {
+            throw new \PDOException($e->getMessage(), 1);
+        }
+    }
+
+    public function getBusNos()
     {
         try {
             return \DB::table('buses')->pluck('bus_no');
@@ -57,16 +60,16 @@ class Bus extends Model
         }
     }
 
-    public function getStopNames ($bus_no)
+    public function getStopNames($bus_no)
     {
         try {
-            $stops = \DB::table('stops')->select('name', 'lat', 'long')->where('bus_no', $bus_no)
+            $stops = \DB::table('stops')->select('name', 'lat', 'long', 'id', 'stops_order')->where('bus_no', $bus_no)
                 ->orderBy('stops_order', 'Asc')->get();
-            if(count($stops->toArray())==0){
+            if (count($stops->toArray()) == 0) {
                 return null;
-            }else{
+            } else {
                 return array_map(function ($stop) {
-                    return [$stop->name, $stop->lat, $stop->long];
+                    return [$stop->name, $stop->lat, $stop->long, 'id'=> $stop->id, 'stop_no'=> $stop->stops_order];
                 }, $stops->toArray());
             }
         } catch (\Exception $e) {
@@ -74,7 +77,7 @@ class Bus extends Model
         }
     }
 
-    public function getPassengers ($bus_no)
+    public function getPassengers($bus_no)
     {
         try {
             return \DB::select("SELECT u.name as uname, u.username, u.dept_id, u.course_id,u.bus_no,u.phone_no, u.level ,
@@ -86,14 +89,13 @@ class Bus extends Model
         }
     }
 
-    public function getCoordinator ($bus_no)
+    public function getCoordinator($bus_no)
     {
         try {
             $coordinator = \DB::table('users')->where('level', '2')->where('bus_no', $bus_no)->first();
-//            print_r($coordinator);
-            if($coordinator == null){
+            if ($coordinator == null) {
                 return null;
-            }else{
+            } else {
                 return $coordinator;
             }
         } catch (\Exception $e) {
@@ -101,13 +103,13 @@ class Bus extends Model
         }
     }
 
-    public function getDriver ($bus_no)
+    public function getDriver($bus_no)
     {
         try {
             $driver =  \DB::table('users')->where('level', '1')->where('bus_no', $bus_no)->first();
-            if($driver == null){
+            if ($driver == null) {
                 return $driver;
-            }else{
+            } else {
                 return $driver;
             }
         } catch (\Exception $e) {
@@ -115,7 +117,7 @@ class Bus extends Model
         }
     }
 
-    public function getPassengersOfStop ($id)
+    public function getPassengersOfStop($id)
     {
         try {
             return \DB::select("SELECT  u.name, u.username, u.dept_id, u.course_id,u.bus_no,u.phone_no, u.level ,
@@ -125,7 +127,7 @@ class Bus extends Model
         }
     }
 
-    public function getStopIds ($bus_no)
+    public function getStopIds($bus_no)
     {
         try {
             return \DB::table('stops')->where('bus_no', $bus_no)->orderBy('stops_order', 'ASC')->pluck('id')->toArray();
@@ -134,7 +136,7 @@ class Bus extends Model
         }
     }
 
-    public function getStops ($bus_no)
+    public function getStops($bus_no)
     {
         try {
             $stops = \DB::table('stops')->select('stops_order', 'name', 'lat', 'long')->where('bus_no', $bus_no)
