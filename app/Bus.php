@@ -117,6 +117,16 @@ class Bus extends Model
         }
     }
 
+    public function changeUserBus($bus_no, $user)
+    {
+        try {
+            $user->bus_no = $bus_no;
+            $user->save();
+        } catch (\Exception $e) {
+            throw new \PDOException($e->getMessage(), 1);
+        }
+    }
+
     public function getPassengersOfStop($id)
     {
         try {

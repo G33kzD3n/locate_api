@@ -51,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin:admin'], function () {
     Route::put('1.0/buses/{bus}/edit', 'BusController@edit');
     Route::delete('1.0/buses/{bus}/delete', 'BusController@delete');
 
+    //change driver/student/coordinator for bus.
+    Route::put('1.0/buses/{bus}/user/{username}', 'BusController@changeUserBus');
+
     //edit existing users
     Route::patch('1.0/users/{username}/edit', 'UserController@edit');
 

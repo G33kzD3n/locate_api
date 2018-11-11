@@ -65,4 +65,16 @@ class UserController extends UserApiController
 
         return response()->json(['data' => $filteredData], 201);
     }
+
+    public function changeBusDriver(Request $request, $bus, $user)
+    {
+        // $userModel = new User();
+        $busModel       = new Bus();
+        $previousDriver = $busModel->getDriver();
+        $status         = $userModel->changeDriver($bus, $driver);
+
+        return $user;
+        // $userModel = new User();
+        // $status = $userModel->assignBus($bus,$)
+    }
 }

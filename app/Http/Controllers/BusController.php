@@ -92,6 +92,13 @@ class BusController extends Controller
         return response()->json(['bus' => $result], 200);
     }
 
+    public function changeUserBus($bus, $user)
+    {
+        $busModel  = new Bus();
+        $busModel->changeUserBus($bus->bus_no, $user);
+        return response()->json(['status'=>'Assigning user to bus was successfully done.']);
+    }
+
     public function showPassengers(Request $request, $bus)
     {
         $busModel = new Bus();
