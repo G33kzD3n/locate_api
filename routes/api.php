@@ -51,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin:admin'], function () {
 
     //edit existing users
     Route::patch('1.0/users/{username}/edit', 'UserController@edit');
+
+    //push notification for all users.
+    Route::post('1.0/notifications', 'PushNotificationController@store');
 });
 
 /*
