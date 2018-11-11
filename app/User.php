@@ -38,14 +38,14 @@ class User extends Authenticatable
      *
      * @return token
      */
-    public function generateToken ()
+    public function generateToken()
     {
         $this->api_token = str_random(60);
         $this->save();
         return $this->api_token;
     }
 
-    public function updateUserWithoutAvatar ($request, $user)
+    public function updateUserWithoutAvatar($request, $user)
     {
         try {
             $user->update($request);
@@ -53,15 +53,27 @@ class User extends Authenticatable
             throw new \PDOException($e->getMessage(), 1);
         }
     }
-    public function updateUserWithAvatar($request,$user){
+
+    public function updateUserWithAvatar($request, $user)
+    {
         try {
             $user->update($request);
         } catch (\Exception $e) {
             throw new \PDOException($e->getMessage(), 1);
         }
     }
-    public function stop ()
+
+    public function stop()
     {
         return $this->belongsTo(Stop::class);
+    }
+
+    public function getAllUsers()
+    {
+        try {
+            return $this->all();
+        } catch (\Exception $e) {
+            throw new \PDOException($e->getMessage(), 1);
+        }
     }
 }

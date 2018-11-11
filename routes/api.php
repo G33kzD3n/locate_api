@@ -13,7 +13,9 @@
 
 Route::post('/1.0/login', 'Auth\LoginController@login');
 
-Route::get('/1.0/users/{username}', 'UserController@index');
+Route::get('/1.0/users', 'UserController@index');
+Route::get('/1.0/users/{username}', 'UserController@show');
+
 Route::get('/1.0/users/{username}/fees/unpaid', 'UserController@showUnPaid');
 
 Route::get('/1.0/buses', 'BusController@index');
@@ -55,17 +57,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin:admin'], function () {
     //push notification for all users.
     Route::post('1.0/notifications', 'PushNotificationController@store');
 });
-
-/*
-|--------------------------------------------------------------------------
-| Testing Routes
-|--------------------------------------------------------------------------
-*/
-//to view all users in database.
-//e.g 1.0/users
-Route::get(
-    '/1.0/users',
-    function () {
-        return \DB::table('users')->orderBy('level', 'desc')->get();
-    }
-);

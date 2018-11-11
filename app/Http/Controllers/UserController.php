@@ -13,7 +13,18 @@ class UserController extends UserApiController
      * @param User $user
      * @return Illuminate\Support\Facades\Response
      */
-    public function index($user)
+    public function index()
+    {
+        $userModel = new User();
+        $users     = $userModel->getAllUsers();
+        return response()->json(['data' =>
+            array_map(function ($user) {
+                return $this->allUsersTranform($user);
+            }, $users->toArray())
+        ], 200);
+    }
+
+    public function show($user)
     {
         return response()->json(['data' => $this->userTranform($user)], 200);
     }

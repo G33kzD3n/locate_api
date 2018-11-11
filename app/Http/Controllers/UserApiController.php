@@ -180,4 +180,22 @@ class UserApiController extends Controller
             ]
         );
     }
+
+    protected function allUsersTranform($user)
+    {
+        $baseurl= env('APP_URL');
+        return [
+            "level"                => (int)$user['level'],
+            "name"                 => (string)$user['name'],
+            "username"             => (string)$user['username'],
+            "bus_no"               => (int)$user['bus_no'],
+            "dept_code"            => (string)$user['dept_id'],
+            "course_code"          => $user['course_id'],
+            "semester_level"       => $user['semester'],
+            "avatar"               => env('APP_URL').':8000/avatars/'.$user['avatar'],
+            "registration_date"    => (string)$user['registered_on'],
+            "cell_no"              => (int)$user['phone_no'],
+            "stop_id"              => $user['stop_id']
+        ];
+    }
 }
