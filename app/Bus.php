@@ -69,7 +69,7 @@ class Bus extends Model
                 return null;
             } else {
                 return array_map(function ($stop) {
-                    return [$stop->name, $stop->lat, $stop->long, 'id'=> $stop->id, 'stop_no'=> $stop->stops_order];
+                    return [$stop->name, $stop->lat, $stop->long, 'id'=> $stop->id, 'stop_no'=> $stop->stops_order, 'lat'=>$stop->lat, 'lng'=>$stop->long];
                 }, $stops->toArray());
             }
         } catch (\Exception $e) {

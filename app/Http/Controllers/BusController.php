@@ -158,7 +158,9 @@ class BusController extends Controller
                     return [
                         'id'     => $stop['id'],
                         'name'   => $stop[0],
-                        'stop_no'=> $stop['stop_no']
+                        'stop_no'=> $stop['stop_no'],
+                        'lat'    => $stop['lat'],
+                        'lng'    => $stop['lng']
                     ];
                 }, $stops)
             ],
