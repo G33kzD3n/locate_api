@@ -18,7 +18,7 @@ class AddStopIdToUsers extends Migration
             $table->foreign('stop_id')
                 ->references('id')->on('stops')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

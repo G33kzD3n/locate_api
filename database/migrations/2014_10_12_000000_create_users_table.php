@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
                 $table->string('api_token', 60)->unique();
                 $table->enum('level', [0, 1, 2])->default(1);
                 $table->string('name');
-                $table->integer('bus_no');
+                $table->integer('bus_no')->nullable();
                 $table->string('dept_id');
                 $table->string('course_id')->default('undefined');
                 $table->enum('semester', [1, 2, 3, 4])->nullable();

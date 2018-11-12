@@ -17,7 +17,7 @@ class AddForeignKeyBusNoToUsers extends Migration
             $table->foreign('bus_no')
                 ->references('bus_no')->on('buses')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 
