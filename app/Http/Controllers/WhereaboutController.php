@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Pusher\Pusher;
 use App\Whereabout;
+use App\WhereaboutLog;
 use  Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,9 +23,6 @@ class WhereaboutController extends Controller
         if (!isset($whereabouts->lat)) {
             abort(404);
         }
-
-        // $pusher->trigger('whereabout-channel', 'my-event', ['data' =>"new location"]);
-        // $pusher->trigger('whereabout-channel', 'my-event', ['data' =>"new location"]);
         return response()->json(['bus' => [
             'lat'  => (float)$whereabouts->lat,
             'lng'  => (float)$whereabouts->long,
@@ -47,8 +45,10 @@ class WhereaboutController extends Controller
         }
         $data            = $this->castRequestData($request->all());
         $whereaboutModel = new Whereabout();
+        $logModel        =  new WhereaboutLog();
         try {
             $status= $whereaboutModel->store($bus->bus_no, $data);
+            $logModel->insertWhereaboutsIntoLog($bus->bus_no, $data);
         } catch (\Exception $e) {
             abort(401);
         }
