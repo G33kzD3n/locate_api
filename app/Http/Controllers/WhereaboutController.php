@@ -45,10 +45,10 @@ class WhereaboutController extends Controller
         }
         $data            = $this->castRequestData($request->all());
         $whereaboutModel = new Whereabout();
-        $logModel        =  new WhereaboutLog();
+        // $logModel        =  new WhereaboutLog();
         try {
             $status= $whereaboutModel->store($bus->bus_no, $data);
-            $logModel->insertWhereaboutsIntoLog($bus->bus_no, $data);
+            // $logModel->insertWhereaboutsIntoLog($bus->bus_no, $data);
         } catch (\Exception $e) {
             abort(401);
         }
