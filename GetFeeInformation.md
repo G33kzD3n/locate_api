@@ -1,9 +1,8 @@
-
-# Fees
+# Get User Fees
 
 Used to get the fee details for a user, that will show the total fee amount to be paid, and no of unpaid months.
 
-**URL** : `/api/1.0/users/15045112010/fees/unpaid`
+**URL** : `/api/1.0/users/{username}/fees/unpaid`
 
 **Method** : `GET`
 
@@ -44,7 +43,7 @@ Used to get the fee details for a user, that will show the total fee amount to b
 
 ## Error Response
 
-**Condition** : If 'username'  passed is not found in database.
+**Condition** : If '{username}'  passed is not found in database.
 
 **Code** : `404 Not Found`
 

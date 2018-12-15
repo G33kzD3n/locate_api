@@ -1,8 +1,8 @@
 
+# Update Bus Breakdown
 
-# Breakdown Update
+Update to breakdown information of bus.
 
-Update to breakdown info.
 > The **Event** named *breakdown-info-updated* on channel *busno-channel* is generated when this api returns `Response with status code 200 Ok`.
 > The api user's must bind to the event-name **breakdown-info-updated** .
 
@@ -14,9 +14,9 @@ Update to breakdown info.
   });
 ```
 >
->NOTE: **busno** and **breakdown** are to be passed in the *API-URL* only, not as *Form Payload*.
+>NOTE: **{busno}** and **breakdown** are to be passed in the *API-URL* only, not as *Form Payload*.
 
-**URL** : `/api/1.0/buses/busno/breakdowns/breakdown`
+**URL** : `/api/1.0/buses/{busno}/breakdowns/{breakdown}`
 
 **Method** : `PUT`
 
@@ -26,7 +26,6 @@ Update to breakdown info.
 
 ```json
 {
-    "busno"     : "[valid bus no of as bus e.g 8840, TO BE PASSED IN API URL]",
     "breakdown" : "[valid breakdown id e.g 14]",
     "message"   : "[string]",
     "time"      : "[Time is valid DateTime string in format year-month-day hour:min:sec]"
@@ -57,7 +56,7 @@ Update to breakdown info.
 
 ## Error Response
 
-**Condition** : If 'busno'  passed in api is not found in database.
+**Condition** : If '{busno}'  passed in api is not found in database.
 
 **Code** : `404 Not Found`
 

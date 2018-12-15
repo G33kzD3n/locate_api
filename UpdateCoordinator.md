@@ -1,14 +1,14 @@
 
-# Edit an Coordinator.
+# Update Coordinator.
 
 Used to update the details of an existing coordinator .
 
-**URL** : `/api/admin/1.0/users/username/edit`
+**URL** : `/api/admin/1.0/users/{username}`
 
 **Method** : `POST`
 
 **Auth required** : Yes
->**NOTE** : Pass the **username** in the api to edit the profile of this user.
+>**NOTE** : Pass the **{username}** in the api to edit the profile of this user.
 
 >Also set the headers
 ```
@@ -17,7 +17,7 @@ Authorization : Bearer admin_api_token.
 ```
 The endpoint to update the Coordinator is
  ```
- POST :/api/admin/1.0/users/username/edit
+ POST :/api/admin/1.0/users/{username}
  ```
 
 >**Authorization Header** need to be set in the post request api, **and please keep space between Bearer and api_token.**
@@ -69,7 +69,7 @@ The endpoint to update the Coordinator is
 ```
 ## Error Response
 
-**Condition** : If 'username'  passed in api endpoint not found database.
+**Condition** : If '{username}'  passed in api endpoint not found database.
 
 **Code** : `404 Not Found`
 

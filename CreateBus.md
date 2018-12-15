@@ -1,14 +1,14 @@
-# Create a new Bus.
 
+# Create Bus.
 Used to create a new bus into the bus inventory.
 
-**URL** : `/api/admin/1.0/buses/create`
+**URL** : `/api/admin/1.0/buses`
 
 **Method** : `POST`
 
 **Auth required** : Yes
 >NOTE: **Authorization Header** need to be set in the post request api, **and please keep space between Bearer and api_token.**
->Set the headers 
+>Set the headers
 ```
 Content-Type : application/json,
 Accept: application/json,
@@ -22,7 +22,7 @@ Authorization : Bearer admin_api_token.
 
 ```json
 {
-    "bus_no" 		 : "[valid bus no of as bus e.g 8840, to be passed as form payload]",
+    "bus_no"     : "[valid bus no of as bus e.g 8840, to be passed as form payload]",
     "gps_device_id"  : "[unique gps device id]",
 }
 ```

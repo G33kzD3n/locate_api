@@ -1,5 +1,4 @@
-# Passengers
-
+# Get Bus Passengers
 Used to collect the ordered collection of passengers belonging to a bus, ordered in increasing order[1,2,3..] of stop_no.
 
 **URL** : `/api/1.0/buses/busno/passengers`

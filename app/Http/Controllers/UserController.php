@@ -13,25 +13,24 @@ class UserController extends UserApiController
      * @param User $user
      * @return Illuminate\Support\Facades\Response
      */
-    public function index()
+    public function index ()
     {
         $userModel = new User();
-        $users     = $userModel->getAllUsers();
+        $users = $userModel->getAllUsers();
         return response()->json(['data' =>
-            array_map(function ($user) {
-                return $this->allUsersTranform($user);
-            }, $users->toArray())
+                                     array_map(function ($user) {
+                                         return $this->allUsersTranform($user);
+                                     }, $users->toArray()),
         ], 200);
     }
 
-    public function show($user)
+    public function show ($user)
     {
         return response()->json(['data' => $this->userTranform($user)], 200);
     }
 
-    public function edit(Request $request, $user)
+    public function edit (Request $request, $user)
     {
-        //perform validation.
         $validator = $this->validateRequestData($request->all());
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
@@ -49,13 +48,13 @@ class UserController extends UserApiController
         if ($status instanceof \Exception) {
             return response()->json(['errors' => $status->getMessage()], 400);
         }
-        return response()->json(['status'=>'user updated successfully.'], 201);
+        return response()->json(['status' => 'user updated successfully.'], 201);
     }
 
-    public function showUnPaid($user)
+    public function showUnPaid ($user)
     {
-        $feeModel     = new Fee();
-        $result       = $feeModel->unPaid($user);
+        $feeModel = new Fee();
+        $result = $feeModel->unPaid($user);
         $filteredData = [
             'name'             => $result->name,
             'monthly_fee'      => (int)$result->monthly_fee,
@@ -66,15 +65,12 @@ class UserController extends UserApiController
         return response()->json(['data' => $filteredData], 201);
     }
 
-    public function changeBusDriver(Request $request, $bus, $user)
+    public function changeBusDriver (Request $request, $bus, $user)
     {
-        // $userModel = new User();
-        $busModel       = new Bus();
-        $previousDriver = $busModel->getDriver();
-        $status         = $userModel->changeDriver($bus, $driver);
 
-        return $user;
-        // $userModel = new User();
-        // $status = $userModel->assignBus($bus,$)
+//        $busModel = new Bus();
+//        $previousDriver = $busModel->getDriver();
+//        $status = $userModel->changeDriver($bus, $driver);
+//        return $user
     }
 }

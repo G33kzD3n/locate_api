@@ -1,7 +1,7 @@
-# Location
-
+# Get Bus Whereabouts
 Used to collect the latest whereabouts of the bus.
-**URL** : `/api/1.0/buses/busno/location`
+
+**URL** : `/api/1.0/buses/{busno}/whereabouts`
 
 **Method** : `GET`
 
@@ -32,16 +32,16 @@ Used to collect the latest whereabouts of the bus.
 ```json
 {
   "bus": {
-      "lat": 34.237289,
-      "lng": 74.9990089,
-      "time": "2018-06-10 12:51:23"
+      "lat"  : 34.237289,
+      "lng"  : 74.9990089,
+      "time" : "2018-06-10 12:51:23"
     }
 }
 ```
 
 ## Error Response
 
-**Condition** : If 'busno'  passed is not found in database.
+**Condition** : If '{busno}'  passed is not found in database.
 
 **Code** : `404 Not Found`
 
@@ -50,8 +50,8 @@ Used to collect the latest whereabouts of the bus.
 ```json
 {
     "error": {
-        "error_code"   : "resource_not_found_error",
-        "error_message": "Resource not found errors arise when your request is trying to access the resources not found in datbase."
+        "error_code"    : "resource_not_found_error",
+        "error_message" : "Resource not found errors arise when your request is trying to access the resources not found in datbase."
     }
 }
 ```

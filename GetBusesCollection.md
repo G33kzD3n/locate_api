@@ -1,5 +1,4 @@
-
-# Buses
+# Get Buses
 
 Used to collect the buses collection, with bus driver and coordinator details.
 

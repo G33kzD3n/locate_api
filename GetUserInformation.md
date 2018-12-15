@@ -1,8 +1,7 @@
-# Profile
+# Get User
+Used to collect the complete information regarding an user.
 
-Used to collect a single user resource for profile.
-
-**URL** : `/api/1.0/users/username`
+**URL** : `/api/1.0/users/{username}`
 
 **Method** : `GET`
 
@@ -12,7 +11,6 @@ Used to collect a single user resource for profile.
 
 ```json
 {
-    "username"  : "[valid username is 11 digit number from 154045112000-2038] must be present in url after users",
     "api_token" : "[60 character string] must be passed in Authorization : Bearer header, Don't use api_token key as form payload."
 }
 ```
@@ -21,7 +19,7 @@ Used to collect a single user resource for profile.
 
 ```json
 {
-    "username" : "15045112037",
+    "{username}" : "15045112037",
 }
 ```
 
@@ -55,7 +53,7 @@ Used to collect a single user resource for profile.
 
 ## Error Response
 
-**Condition** : If 'username' passed is not found in database.
+**Condition** : If '{username}' passed is not found in database.
 
 **Code** : `404 Not Found`
 

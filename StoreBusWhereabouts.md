@@ -1,6 +1,6 @@
-# Store
-
+# Store Bus Whereabouts
 Used to store the whereabouts of the bus, latitude, longitude and time when request was made.
+
 > The **Event** named *location-update* on channel *busno-channel* is generated when this api returns `Response with status code 201 Created`.
 > The api user's must bind to the event-name **location-update** .
 >
@@ -12,9 +12,9 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
   });
 ```
 >
->NOTE: **busno** is to be passed in the *API-URL* only, not as *Form Payload*.
+>NOTE: **{busno}** is to be passed in the *API-URL* only, not as *Form Payload*.
 
-**URL** : `/api/1.0/buses/busno/store`
+**URL** : `/api/1.0/buses/{busno}/whereabouts`
 
 **Method** : `POST`
 
@@ -24,7 +24,6 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
 
 ```json
 {
-    "busno" : "[valid bus no of as bus e.g 8840, to be passed in api]",
     "lat"   : "[Latitude of the bus is a number,to be passed in form]",
     "lng"  : "[Longitude of the bus is a number, to be passed in form]",
     "time"  : "[Time is valid DateTime string in format year-month-day hour:min:sec, to be passed in form]"
@@ -65,7 +64,7 @@ Used to store the whereabouts of the bus, latitude, longitude and time when requ
 ```
 ## Error Response
 
-**Condition** : If 'busno'  passed is not found in database.
+**Condition** : If '{busno}'  passed is not found in database.
 
 **Code** : `404 Not Found`
 

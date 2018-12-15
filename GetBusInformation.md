@@ -1,9 +1,8 @@
+# Get Bus
 
-# Bus
+Used to collect the complete bus information and its coordinator, driver details ..
 
-Used to collect the coordinator, driver details for a bus..
-
-**URL** : `/api/1.0/buses/busno`
+**URL** : `/api/1.0/buses/{busno}`
 
 **Method** : `GET`
 
@@ -61,7 +60,7 @@ Used to collect the coordinator, driver details for a bus..
 
 ## Error Response
 
-**Condition** : If 'busno'  passed is not found in database.
+**Condition** : If '{busno}'  passed is not found in database.
 
 **Code** : `404 Not Found`
 
